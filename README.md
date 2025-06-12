@@ -1,440 +1,393 @@
 # Ruggard: Twitter Trustworthiness Bot
 
-Ruggard is a Twitter (X) bot that responds to replies containing the phrase "riddle me this" or mentions of the bot’s handle under a tweet. It analyzes the trustworthiness of the original tweet’s author and posts a concise summary of the analysis. The bot evaluates account age, follower/following ratio, bio content, engagement patterns, recent tweet sentiment, and checks if the author is followed by trusted accounts from a predefined list.
+Ruggard is a Twitter (X) bot that responds to replies containing the phrase "riddle me this" or mentions of the bot's handle under a tweet. It analyzes the trustworthiness of the original tweet's author and posts a concise summary of the analysis. The bot evaluates account age, follower/following ratio, bio content, engagement patterns, recent tweet sentiment, and checks if the author is followed by trusted accounts from a predefined list.
 
 ## Features
 
-Trigger-Based Response: Responds to "riddle me this" replies or bot mentions in tweet replies.
-
-Account Analysis:
-
-Account age (in days).
-
-Follower-to-following ratio.
-
-Bio content (length and suspicious keywords like "crypto", "NFT").
-
-Engagement patterns (average likes, retweets, reply frequency).
-
-Sentiment and topic analysis of recent tweets.
-
-Trusted Account Cross-Check: Verifies if the author is followed by at least three accounts from a trusted list (sourced from GitHub). A positive signal is given if followed by two or more trusted accounts.
-
-Secure and Robust:
-
-Uses environment variables for API keys.
-
-Comprehensive logging with rotation.
-
-Handles Twitter API rate limits and errors gracefully.
-
-Modular Design: Separates account analysis, trusted account checks, and bot logic for maintainability.
+- **Trigger-Based Response**: Responds to "riddle me this" replies or bot mentions in tweet replies
+- **Comprehensive Account Analysis**:
+  - Account age (in days)
+  - Follower-to-following ratio
+  - Bio content analysis (length and suspicious keywords like "crypto", "NFT")
+  - Engagement patterns (average likes, retweets, reply frequency)
+  - Sentiment and topic analysis of recent tweets
+- **Trusted Account Cross-Check**: Verifies if the author is followed by at least three accounts from a trusted list (sourced from GitHub)
+- **Secure and Robust**:
+  - Uses environment variables for API keys
+  - Comprehensive logging with rotation
+  - Handles Twitter API rate limits and errors gracefully
+- **Modular Design**: Separates account analysis, trusted account checks, and bot logic for maintainability
 
 ## Project Structure
 
+```
 ruggard/
 ├── bot.py                # Main bot script for streaming and replying
 ├── account_analysis.py   # Module for analyzing account trustworthiness
 ├── trusted_accounts.py   # Module for trusted account cross-check
 ├── requirements.txt      # Python dependencies
-├── run_bot.sh           # Bash script to run the bot
-├── .env.example         # Template for environment variables
+├── run-bot.sh           # Bash script to run the bot (for local setup)
+├── .env                 # Environment variables (create from .env.example)
+├── .replit              # Replit configuration file
 ├── bot.log              # Log file (generated at runtime)
-└── trusted_list.json    # Cached trusted accounts list (generated at runtime)
+├── trusted_list.json    # Cached trusted accounts list (generated at runtime)
+├── LICENSE              # MIT License
+└── README.md            # This file
+```
 
 ## Prerequisites
-Python 3.7+: Required to run the bot.
 
-Twitter Developer Account: Obtain API credentials from developer.twitter.com.
+- **Twitter Developer Account**: Obtain API credentials from [developer.twitter.com](https://developer.twitter.com)
+- **Replit Account**: Free account at [replit.com](https://replit.com) for cloud deployment
+- **GitHub Access**: To fetch the trusted accounts list from the repository
 
-Replit Account (optional): For deployment on Replit’s Virtual Machine.
+## Twitter API Setup
 
-GitHub Access: To fetch the trusted accounts list from https://github.com/devsyrem/turst-list.
+### Step 1: Create Twitter Developer Account
+1. Visit [developer.twitter.com](https://developer.twitter.com) and sign up
+2. Create a new project and app
+3. Set App Permissions to **Read and Write**
+4. Enable **OAuth 2.0** in User Authentication Settings with:
+   - Type of App: **Web App, Automated App, or Bot**
+   - Website URL: `https://example.com` (temporary)
+   - Callback URL: Will be updated after Replit deployment
 
-## Setup and Installation
-The Ruggard Twitter bot monitors tweets and replies with trustworthiness analyses of mentioned accounts. This guide provides two setup options: local setup using a Python virtual environment with Serveo for HTTPS tunneling, and cloud setup using Replit for a permanent HTTPS callback URL. Both setups use Twitter API v2 for streaming and v1.1 for posting replies.
+### Step 2: Obtain API Credentials
+You'll need these credentials:
+- **Client ID** and **Client Secret** (OAuth 2.0)
+- **Consumer Key**, **Consumer Secret**, **Access Token**, **Access Token Secret** (API v1.1)
+- **Bearer Token** (API v2)
 
-Prerequisites
-- Twitter Developer Account:
-  - Create an app in the Twitter Developer Portal (https://developer.twitter.com).
-  - Set App Permissions to Read and Write.
-  - Enable OAuth 2.0 in User Authentication Settings with:
-    - Type of App: Web App, Automated App, or Bot.
-    - Website URL: https://example.com.
-  - Obtain:
-    - Client ID and Client Secret (OAuth 2.0).
-    - Consumer Key, Consumer Secret, Access Token, Access Token Secret (API v1.1).
+## Replit Deployment Setup
 
-- Local Setup:
-  - Python 3.12 (recommended; 3.13+ requires imghdr patch).
-  - Git (optional, for cloning).
-  - Windows, macOS, or Linux with an SSH client (Windows 10/11 includes OpenSSH).
-  - VS Code or another code editor (optional).
+### Step 1: Create Replit Project
+1. Sign up at [replit.com](https://replit.com)
+2. Click **+ Create Repl**
+3. Choose **Python** template
+4. Name your Repl (e.g., "ruggard-bot")
 
-- Replit Setup:
-  - Free account at https://replit.com.
-  - Internet browser.
+### Step 2: Upload Project Files
+1. Upload all project files to your Repl:
+   - `bot.py`
+   - `account_analysis.py`
+   - `trusted_accounts.py`
+   - `requirements.txt`
+   - `.replit`
+2. The dependencies will be automatically installed
 
-### Local Setup
+### Step 3: Configure Environment Variables
+1. Click the **Secrets** tab (lock icon) in your Replit workspace
+2. Add these environment variables:
 
-This setup runs the bot on your machine using a Python virtual environment and Serveo for HTTPS tunneling to handle Twitter OAuth 2.0 callbacks.
+```
+CONSUMER_KEY=your_consumer_key_here
+CONSUMER_SECRET=your_consumer_secret_here
+ACCESS_TOKEN=your_access_token_here
+ACCESS_TOKEN_SECRET=your_access_token_secret_here
+BOT_HANDLE=your_bot_handle_here
+CLIENT_ID=your_oauth2_client_id_here
+CLIENT_SECRET=your_oauth2_client_secret_here
+```
 
-Step 1: Clone or Download the Repository
-1. Clone the repository (requires Git): git clone <repository-url>
-   cd ruggard-miftah
+**Important**: Do NOT use a `.env` file in Replit as it's less secure. Always use the Secrets tab.
 
-2. Or download and extract the ZIP file to a folder (e.g., C:\Users\YourUsername\ruggard-miftah).
+### Step 4: Get Your Replit URL
+1. Click the **Run** button once to start your Repl
+2. Note your Replit URL (e.g., `https://ruggard-bot.username.repl.co`)
+3. The OAuth callback URL will be: `https://ruggard-bot.username.repl.co/auth/twitter/callback`
 
-Step 2: Set Up Python Virtual Environment
-1. Navigate to the project folder: cd C:\Users\YourUsername\ruggard-miftah
+### Step 5: Update Twitter Developer Portal
+1. Go to your Twitter app in the Developer Portal
+2. Navigate to **User Authentication Settings**
+3. Update the **Callback URL** to: `https://your-repl-name.username.repl.co/auth/twitter/callback`
+4. Save the changes
 
-2. Create a virtual environment: python -m venv venv
+### Step 6: Deploy and Run
+1. In Replit, click the **Run** button
+2. The bot will start and show an authorization URL in the console
+3. Open the authorization URL in a new tab
+4. Log in with your bot's Twitter account
+5. Click **Authorize app**
+6. Return to Replit console to see "OAuth 2.0 access token obtained"
+7. The bot is now running and monitoring for triggers
 
-3. Activate the virtual environment:
-- Windows (PowerShell or Command Prompt):
-  ```
-  .\venv\Scripts\Activate.ps1
-  ```
-- macOS/Linux:
-  ```
-  source venv/bin/activate
-  ```
+## Bot Usage
 
-Step 3: Install Dependencies
-1. Ensure requirements.txt contains:
-   tweepy==4.14.0
-   python-dotenv==1.0.0
-   requests==2.31.0
-   vaderSentiment==3.3.2
-   textblob==0.18.0.post0
+### How to Trigger the Bot
+1. Find any public tweet you want to analyze
+2. Reply to that tweet with either:
+   - "riddle me this"
+   - Mention your bot (e.g., "@RuggardBot")
+3. The bot will analyze the original tweet's author and reply with a trustworthiness summary
 
+### Example Interaction
+User replies to @ExampleUser's tweet with: "riddle me this"
 
-3. Install dependencies: pip install -r requirements.txt
-
-Step 4: Configure Environment Variables
-1. Create a .env file in the project root:
-   CONSUMER_KEY=your_consumer_key
-   CONSUMER_SECRET=your_consumer_secret
-   ACCESS_TOKEN=your_access_token
-   ACCESS_TOKEN_SECRET=your_access_token_secret
-   BOT_HANDLE=RuggardBot
-   CLIENT_ID=your_oauth2_client_id
-   CLIENT_SECRET=your_oauth2_client_secret
-
-
-2. Replace placeholders with your Twitter API credentials.
-
-Step 5: Set Up Serveo for HTTPS Tunneling
-Serveo provides an HTTPS callback URL for Twitter OAuth 2.0 without local installations.
-
-1. Verify SSH client:
-- On Windows:
-  ```
-  ssh -V
-  ```
-- If missing, enable OpenSSH: Settings > Apps > Optional Features > Add a feature > OpenSSH Client.
-- On macOS/Linux, SSH is typically pre-installed.
-
-2. Start Serveo tunnel: ssh -R 80:localhost:3000 serveo.net
-- Output shows an HTTPS URL, e.g., https://randomsubdomain.serveo.net.
-- Copy the URL. The callback URL is https://randomsubdomain.serveo.net/auth/twitter/callback.
-- Keep the terminal open.
-
-3. Update Twitter Developer Portal:
-- Go to Projects & Apps > YourApp > Edit > User Authentication Settings.
-- Add the callback URL (e.g., https://randomsubdomain.serveo.net/auth/twitter/callback).
-- Save.
-
-Step 6: Run the Bot
-1. Open a new terminal in the project folder (keep Serveo running).
-2. Activate the virtual environment (if not active):  .\venv\Scripts\Activate.ps1
-
-3. Run the bot:  python bot.py
-4. Enter the Serveo HTTPS URL (e.g., https://randomsubdomain.serveo.net) when prompted.
-5. A browser opens for Twitter authorization:
-- Log in with the bot's Twitter account (e.g., @RuggardBot).
-- Click Authorize App.
-- The browser shows: "Authentication successful. You can close this window."
-6. Check bot.log for confirmation: cat bot.log  # Windows: Get-Content bot.log -Tail 1
-- Expect:
-  ```
-  2025-06-12 23:00:00,123 - INFO - Twitter API v1.1 initialized successfully
-  2025-06-12 23:00:01,456 - INFO - OAuth 2.0 access token obtained
-  2025-06-12 23:00:02,789 - INFO - Stream started successfully
-  ```
-
-Step 7: Test the Bot
-1. Using a secondary Twitter account, reply to a public tweet on https://x.com with:
-- "riddle me this"
-- @RuggardBot
-- Example:
-  - @TestUser tweets: "Test tweet!"
-  - Reply: "riddle me this"
-2. The bot should reply, e.g.:
-   @YourTestAccount
-
- Trustworthiness of @TestUser
-
-:
-   Verified 
-   Age: 730 days 
-   Follower ratio: 1.20 
-   Bio length: 50 chars 
-   Avg likes: 10.5, Avg retweets: 5.2, Reply ratio: 0.30
-   Sentiment: Neutral (0.00) 
-   Followed by 3 trusted accounts 
-
-
-3. Check bot.log for:   2025-06-12 23:01:00,789 - INFO - Processing trigger from @YourTestAccount
-
-
-### Replit Setup
-
-This setup runs the bot on Replit, providing a permanent HTTPS callback URL without local tunneling.
-
-Step 1: Create a Replit Account
-1. Sign up at https://replit.com.
-
-Step 2: Create a Python Repl
-1. Click + New Repl > Python.
-2. Upload project files (bot.py, requirements.txt, trusted_accounts.py, account_analysis.py) via drag-and-drop or import from Git.
-
-Step 3: Install Dependencies
-1. Open requirements.txt in Replit and ensure it includes:
-   tweepy==4.14.0
-   python-dotenv==1.0.0
-   requests==2.31.0
-   vaderSentiment==3.3.2
-   textblob==0.18.0.post0
-2. Replit automatically installs dependencies when you run the project, or run: pip install -r requirements.txt
-
-
-Step 4: Configure Environment Variables
-1. In Replit's Secrets tab (lock icon), add:
-- CONSUMER_KEY: Your Consumer Key.
-- CONSUMER_SECRET: Your Consumer Secret.
-- ACCESS_TOKEN: Your Access Token.
-- ACCESS_TOKEN_SECRET: Your Access Token Secret.
-- BOT_HANDLE: RuggardBot.
-- CLIENT_ID: Your OAuth 2.0 Client ID.
-- CLIENT_SECRET: Your OAuth 2.0 Client Secret.
-2. Alternatively, create a .env file (less secure):
-
-
-
-   CONSUMER_KEY=your_consumer_key
-   CONSUMER_SECRET=your_consumer_secret
-   ACCESS_TOKEN=your_access_token
-   ACCESS_TOKEN_SECRET=your_access_token_secret
-   BOT_HANDLE=RuggardBot
-   CLIENT_ID=your_oauth2_client_id
-   CLIENT_SECRET=your_oauth2_client_secret
-
-
-
-
-2. Replit automatically installs dependencies when you run the project, or run: pip install -r requirements.txt
-
-Step 4: Configure Environment Variables
-1. In Replit's Secrets tab (lock icon), add:
-- CONSUMER_KEY: Your Consumer Key.
-- CONSUMER_SECRET: Your Consumer Secret.
-- ACCESS_TOKEN: Your Access Token.
-- ACCESS_TOKEN_SECRET: Your Access Token Secret.
-- BOT_HANDLE: RuggardBot.
-- CLIENT_ID: Your OAuth 2.0 Client ID.
-- CLIENT_SECRET: Your OAuth 2.0 Client Secret.
-2. Alternatively, create a .env file (less secure):
-
-
-
-   CONSUMER_KEY=your_consumer_key
-   CONSUMER_SECRET=your_consumer_secret
-   ACCESS_TOKEN=your_access_token
-   ACCESS_TOKEN_SECRET=your_access_token_secret
-   BOT_HANDLE=RuggardBot
-   CLIENT_ID=your_oauth2_client_id
-   CLIENT_SECRET=your_oauth2_client_secret
-
-
-Step 5: Modify bot.py for Replit
-1. Open bot.py and replace the ngrok prompt with a fixed Replit callback URL:  def get_access_token(): time.sleep(60)
-2. Replace replit-project-name.yourusername.repl.co with your Repl's actual URL (found after running).
-
-Step 6: Update Twitter Developer Portal
-1. Run the Repl temporarily to get the HTTPS URL (e.g., https://replit-project-name.yourusername.repl.co).
-2. Add the callback URL: https://replit-project-name.yourusername.repl.co/auth/twitter/callback
-3. Save.
-
-Step 7: Run the Bot
-1. Click Run in Replit.
-2. Authorize the app in the browser (log in with @RuggardBot, click Authorize App).
-3. Check Replit's console for logs similar to local setup.
-
-Step 8: Test the Bot
-1. Reply to a public tweet with "riddle me this" or @RuggardBot.
-2. Verify the bot's reply and check logs as above.
-
-Troubleshooting
-- 403 Forbidden:
-  - Verify all credentials in .env or Replit Secrets.
-  - Ensure the app is in a project with Twitter API v2 access.
-- OAuth Callback Fails:
-  - Confirm the callback URL in the Developer Portal matches exactly.
-  - Check port 3000 is free (local setup):
- ```
- netstat -aon | findstr :3000
- Stop-Process -Id <pid>
- ```
-- Rate Limits:
-  - Free tier limits: ~100 tweets/month, 50 friendship lookups/15 min. Check bot.log.
-- Trusted List Errors:
-  - Ensure trusted_accounts.py uses a fallback list or valid trusted_list.json.
-- Serveo Issues:
-  - Try a custom subdomain:
- ```
- ssh -R customsubdomain:80:localhost:3000 serveo.net
- ```
-- Replit Issues:
-  - Ensure dependencies are installed and .env is loaded.
-
-Notes
-- Twitter API: Free tier has limits; consider Basic tier ($100/month) for production.
-- OAuth 2.0: Access tokens expire in 2 hours; refresh is not implemented.
-- Serveo: Temporary URLs change per session.
-- Replit: Provides permanent URLs but requires cloud setup.
-
-For issues, check bot.log or open an issue on the repository
-
-Example Bot Interaction
-A user replies to a tweet by @ExampleUser with “riddle me this” or mentions @RuggardBot.
-
-The bot analyzes @ExampleUser and responds with a summary like:
-
+Bot responds:
+```
 @TriggerUser Trustworthiness of @ExampleUser:
-Verified ✅
-Age: 730 days ✅
-Follower ratio: 1.20 ✅
-Bio length: 50 chars ✅
-Avg rebates: 10.5, Avg retweets: 5.2, Reply ratio: 0.30
-Sentiment: Neutral (0.00) ✅
-Followed by 3 trusted accounts ✅
+✅ Verified
+✅ Age: 730 days
+✅ Follower ratio: 1.20
+✅ Bio length: 50 chars
+Avg likes: 10.5, Avg retweets: 5.2, Reply ratio: 0.30
+✅ Sentiment: Neutral (0.00)
+✅ Followed by 3 trusted accounts
+```
 
-## Architecture and Key Modules
-Ruggard is designed with a modular architecture for maintainability and scalability. Below are the key components:
-1. bot.py
-Purpose: Main script that initializes the Twitter API, monitors tweets, and coordinates responses.
+## Architecture Overview
 
-Functionality:
-Uses Tweepy’s streaming API to listen for “riddle me this” or bot mentions in replies.
+### Core Components
 
-Fetches the original tweet’s author and triggers analysis via AccountAnalyzer and TrustedAccounts.
+#### 1. bot.py (Main Bot Logic)
+- **Purpose**: Main script that coordinates all bot functionality
+- **Key Features**:
+  - Twitter API v2 streaming for real-time tweet monitoring
+  - OAuth 2.0 authentication handling
+  - Rate limit management
+  - Automatic crash recovery with 60-second restart delay
+  - Comprehensive logging with file rotation (5MB limit, 5 backups)
 
-Posts a concise reply (within 280 characters) summarizing trustworthiness.
+#### 2. account_analysis.py (Account Analysis Engine)
+- **Purpose**: Analyzes Twitter account trustworthiness metrics
+- **Analysis Metrics**:
+  - **Account Age**: Days since account creation
+  - **Follower Ratio**: Followers/Following ratio (detects spam patterns)
+  - **Bio Analysis**: Length and keyword detection (crypto, NFT, etc.)
+  - **Engagement Patterns**: Average likes, retweets, reply frequency
+  - **Content Analysis**: Sentiment analysis using VADER, topic extraction
+- **Dependencies**: `tweepy`, `vaderSentiment`, `textblob`
 
-Features:
-Handles Twitter API rate limits with wait_on_rate_limit=True.
+#### 3. trusted_accounts.py (Trust Verification)
+- **Purpose**: Cross-references accounts against a curated trusted list
+- **Functionality**:
+  - Fetches trusted accounts from GitHub repository
+  - Caches list locally for 24 hours to reduce API calls
+  - Uses Twitter's friendship API to verify connections
+  - Marks users as trusted if followed by 2+ trusted accounts
+- **Trust Threshold**: 3+ trusted followers = strong signal, 2+ = positive signal
 
-Logs all activity to bot.log with rotation (5MB limit, 5 backups).
+### Data Flow
+1. **Stream Monitoring**: Bot listens for trigger phrases in tweet replies
+2. **Target Identification**: Extracts original tweet author for analysis
+3. **Parallel Analysis**: Runs account analysis and trusted account check
+4. **Response Generation**: Compiles analysis into 280-character summary
+5. **Reply Posting**: Posts analysis as reply using Twitter API v1.1
 
-Restarts automatically after crashes with a 60-second delay.
+## Configuration Options
 
-2. account_analysis.py
-Purpose: Analyzes the trustworthiness of a Twitter account.
+### Environment Variables
+```bash
+# Required Twitter API Credentials
+CONSUMER_KEY=your_consumer_key
+CONSUMER_SECRET=your_consumer_secret
+ACCESS_TOKEN=your_access_token
+ACCESS_TOKEN_SECRET=your_access_token_secret
+CLIENT_ID=your_oauth2_client_id
+CLIENT_SECRET=your_oauth2_client_secret
 
-Functionality:
-Account Age: Calculates days since account creation.
+# Bot Configuration
+BOT_HANDLE=your_bot_handle  # Default: RuggardBot
+```
 
-Follower/Following Ratio: Computes ratio to detect spam-like accounts.
+### Customizable Parameters
+In `trusted_accounts.py`:
+- `cache_duration_hours`: How long to cache trusted list (default: 24)
+- Trust threshold: Minimum trusted followers for positive signal (default: 2)
 
-Bio Content: Checks bio length and suspicious keywords (e.g., “crypto”, “NFT”).
+In `account_analysis.py`:
+- Analysis timeframe: How many recent tweets to analyze (default: 20)
+- Sentiment thresholds: Positive/negative sentiment boundaries
 
-Engagement Patterns: Analyzes average likes, retweets, and reply frequency for recent tweets.
+## Monitoring and Maintenance
 
-Tweet Content: Performs sentiment analysis (using VADER) and topic extraction (using TextBlob and keyword matching).
+### Log Files
+- **Location**: `bot.log` in project root
+- **Rotation**: 5MB max size, keeps 5 backup files
+- **Log Levels**: INFO, WARNING, ERROR
+- **Key Events**:
+  - Authentication success/failure
+  - Tweet processing
+  - API rate limits
+  - Crash recovery
 
-Dependencies: tweepy, vaderSentiment, textblob.
+### Performance Monitoring
+```bash
+# Check recent activity
+tail -f bot.log
 
-3. trusted_accounts.py
-Purpose: Checks if a user is followed by trusted accounts from a predefined list.
+# Monitor rate limits
+grep "rate limit" bot.log
 
-Functionality:
-Fetches the trusted list from GitHub and caches it in trusted_list.json for 24 hours.
-
-Uses Tweepy’s get_friendship to check if trusted accounts follow the target user.
-
-Marks the user as trusted if followed by at least two trusted accounts (three or more is a strong signal).
-
-Dependencies: tweepy, requests.
-
-4. run_bot.sh
-Purpose: Bash script to set up and run the bot.
-
-## Functionality:
-Creates a virtual environment and installs dependencies.
-
-Loads environment variables from .env or exported variables.
-
-Runs bot.py in the background and logs to bot.log.
-
-Provides commands to monitor or stop the bot.
-
-## Security Considerations
-API Keys: Stored in Replit Secrets or .env (excluded from version control via .gitignore).
-
-Logging: Sensitive data (e.g., API keys) is not logged. Logs are rotated to prevent excessive disk usage.
-
-Rate Limits: Tweepy handles Twitter API rate limits automatically.
-
-Input Validation: Sanitizes Twitter handles and text to prevent injection attacks.
-
-Network Security: Uses HTTPS for GitHub requests and Twitter API calls.
+# Check error frequency
+grep "ERROR" bot.log | tail -20
+```
 
 ## Troubleshooting
-Bot Not Responding:
-Check bot.log for errors (e.g., authentication failures, rate limits).
 
-Verify Twitter API credentials in Replit Secrets or .env.
+### Common Issues
 
-## Rate Limit Issues:
-Twitter’s free API tier has strict limits (e.g., 50 friendship lookups per 15 minutes). Consider upgrading to the Basic tier ($100/month).
+#### 1. OAuth 2.0 Authentication Errors
+**Error**: `(insecure_transport) OAuth 2 MUST utilize https`
+**Solution**: 
+- Ensure you're using the correct Replit HTTPS URL
+- Update Twitter Developer Portal with the exact callback URL
+- Verify the redirect URI in bot.py matches your Replit URL
 
-Trusted List Errors:
-Ensure the GitHub URL is accessible and JSON format is correct.
+#### 2. API Rate Limiting
+**Error**: Rate limit exceeded messages in logs
+**Solutions**:
+- **Free Tier Limits**: 
+  - 50 friendship lookups per 15 minutes
+  - 1,500 tweets per month
+- **Upgrade Options**: Consider Twitter API Basic tier ($100/month) for higher limits
+- **Optimization**: Reduce trusted account list size in `trusted_accounts.py`
 
-Increase cache duration in trusted_accounts.py if GitHub rate limits are hit.
+#### 3. Twitter API Credential Issues
+**Error**: 401 Unauthorized or 403 Forbidden
+**Solutions**:
+- Verify all credentials in Replit Secrets
+- Ensure your Twitter app has Read and Write permissions
+- Check that your app is in a project with API v2 access
+- Regenerate tokens if necessary
 
-Replit Sleeping:
-Free Repls sleep after inactivity. Use a Reserved VM Deployment for continuous operation.
+#### 4. Replit-Specific Issues
+**Error**: Repl goes to sleep or stops responding
+**Solutions**:
+- **Free Tier**: Repls sleep after inactivity
+- **Recommended**: Use Replit's Reserved VM deployment for 24/7 operation
+- **Alternative**: Implement a keep-alive mechanism (ping service)
 
-## Dependency Issues:
-Run pip install -r requirements.txt in the Replit shell if installation fails.
+#### 5. Trusted List Fetch Errors
+**Error**: Failed to fetch trusted list from GitHub
+**Solutions**:
+- Check internet connectivity
+- Verify GitHub URL is accessible
+- Use cached version if available
+- Implement fallback trusted accounts list
 
-Contributing
-Contributions are welcome! To contribute:
-Fork the repository.
+### Debug Commands
 
-Create a feature branch (git checkout -b feature/your-feature).
+```bash
+# Check if bot is responding
+grep "Processing trigger" bot.log | tail -5
 
-Commit changes (git commit -m "Add your feature").
+# Monitor authentication
+grep "OAuth" bot.log | tail -3
 
-Push to the branch (git push origin feature/your-feature).
+# Check API errors
+grep "TweepyException" bot.log | tail -10
 
-Open a pull request.
+# View recent crashes
+grep "Bot crashed" bot.log | tail -5
+```
 
-Please ensure code follows PEP 8 style guidelines and includes tests where applicable.
-License
-This project is licensed under the MIT License. See LICENSE for details.
+## API Rate Limits and Costs
 
-## Contact
-For issues or questions, open an issue on GitHub or contact the maintainer at [you (miftahudeentajudeen@gmail.com)].
-Notes
-Repository Reference: The README.md assumes the project will be hosted on GitHub (0xQuilox).
+### Twitter API Free Tier
+- **Tweet Cap**: 1,500 tweets per month
+- **Friendship Lookups**: 50 per 15-minute window
+- **Streaming**: 25 concurrent stream connections
+- **Suitable For**: Testing and low-volume usage
 
-Replit Deployment: The instructions prioritizeelne Replit-specific steps, emphasizing the Reserved VM for continuous operation.
+### Twitter API Basic Tier ($100/month)
+- **Tweet Cap**: 50,000 tweets per month
+- **Friendship Lookups**: 300 per 15-minute window
+- **Streaming**: Unlimited concurrent connections
+- **Suitable For**: Production deployment
 
-Customization: Adjust the contact email or add a license file if needed.
+## Security Best Practices
 
-Trusted List: The GitHub URL is included as specified; ensure it remains valid or update if necessary.
+### Credential Management
+- ✅ **Use Replit Secrets**: Never hardcode API keys
+- ✅ **Regular Rotation**: Rotate API keys periodically
+- ✅ **Principle of Least Privilege**: Only request necessary Twitter permissions
 
-Testing: Encourage users to test locally before deploying to catch configuration issues early.
+### Code Security
+- ✅ **Input Validation**: All user inputs are sanitized
+- ✅ **Error Handling**: Comprehensive exception handling prevents crashes
+- ✅ **Logging**: No sensitive data logged
+
+### Network Security
+- ✅ **HTTPS Only**: All API calls use HTTPS
+- ✅ **Certificate Validation**: TLS certificates are properly validated
+- ✅ **Rate Limiting**: Built-in protection against abuse
+
+## Deployment for Production
+
+### Replit Reserved VM Setup
+1. **Upgrade Account**: Get Replit subscription for Reserved VM access
+2. **Configure Deployment**: 
+   - Go to Deployments tab in your Repl
+   - Choose "Reserved VM" deployment type
+   - Set run command: `python bot.py`
+3. **Monitor Performance**: Use Replit's built-in monitoring tools
+4. **Set Up Alerts**: Configure notifications for downtime
+
+### Scaling Considerations
+- **Multiple Bots**: Deploy separate instances for different trigger phrases
+- **Geographic Distribution**: Use multiple Replit regions for global coverage
+- **Load Balancing**: Implement webhook-based architecture for high volume
+
+## Contributing
+
+We welcome contributions! Here's how to get started:
+
+### Development Setup
+1. Fork the repository
+2. Create a new Repl from your fork
+3. Set up environment variables in Secrets
+4. Make your changes
+5. Test thoroughly with a test Twitter account
+
+### Contribution Guidelines
+- **Code Style**: Follow PEP 8 guidelines
+- **Testing**: Include test cases for new features
+- **Documentation**: Update README.md for new features
+- **Commit Messages**: Use clear, descriptive commit messages
+
+### Types of Contributions
+- 🐛 **Bug Fixes**: Fix issues with existing functionality
+- ✨ **New Features**: Add new analysis metrics or bot capabilities
+- 📚 **Documentation**: Improve setup guides and troubleshooting
+- 🔧 **Performance**: Optimize API usage and response times
+
+## FAQ
+
+### Q: How much does it cost to run the bot?
+**A**: The free Twitter API tier allows 1,500 tweets/month, suitable for testing. For production, expect $100/month for Twitter API Basic tier plus Replit hosting costs.
+
+### Q: Can I run multiple bots with different handles?
+**A**: Yes, create separate Replit projects with different Twitter apps and bot handles.
+
+### Q: How accurate is the trustworthiness analysis?
+**A**: The analysis combines multiple metrics for a comprehensive view, but should be used as guidance rather than definitive truth.
+
+### Q: Can I customize the analysis criteria?
+**A**: Yes, modify `account_analysis.py` to adjust weights, thresholds, and add new metrics.
+
+### Q: What happens if the trusted accounts list is unavailable?
+**A**: The bot uses cached data and falls back to account-only analysis if the GitHub list is inaccessible.
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
+## Support
+
+- **GitHub Issues**: Report bugs and request features
+- **Documentation**: This README covers most use cases
+- **Community**: Join discussions in GitHub Discussions
+
+## Changelog
+
+### Version 1.0.0
+- Initial release with core functionality
+- Account analysis engine
+- Trusted account verification
+- Replit deployment support
+- Comprehensive logging and error handling
+
+---
+
+**Note**: This bot is designed for educational and research purposes. Always respect Twitter's Terms of Service and API usage guidelines.

@@ -232,14 +232,53 @@ Step 4: Configure Environment Variables
 
 
 Step 5: Modify bot.py for Replit
-1. Open bot.py and replace the ngrok prompt with a fixed Replit callback URL:  def get_access_token():
+1. Open bot.py and replace the ngrok prompt with a fixed Replit callback URL:  def get_access_token(): time.sleep(60)
+2. Replace replit-project-name.yourusername.repl.co with your Repl's actual URL (found after running).
 
+Step 6: Update Twitter Developer Portal
+1. Run the Repl temporarily to get the HTTPS URL (e.g., https://replit-project-name.yourusername.repl.co).
+2. Add the callback URL: https://replit-project-name.yourusername.repl.co/auth/twitter/callback
+3. Save.
 
+Step 7: Run the Bot
+1. Click Run in Replit.
+2. Authorize the app in the browser (log in with @RuggardBot, click Authorize App).
+3. Check Replit's console for logs similar to local setup.
 
+Step 8: Test the Bot
+1. Reply to a public tweet with "riddle me this" or @RuggardBot.
+2. Verify the bot's reply and check logs as above.
 
+Troubleshooting
+- 403 Forbidden:
+  - Verify all credentials in .env or Replit Secrets.
+  - Ensure the app is in a project with Twitter API v2 access.
+- OAuth Callback Fails:
+  - Confirm the callback URL in the Developer Portal matches exactly.
+  - Check port 3000 is free (local setup):
+ ```
+ netstat -aon | findstr :3000
+ Stop-Process -Id <pid>
+ ```
+- Rate Limits:
+  - Free tier limits: ~100 tweets/month, 50 friendship lookups/15 min. Check bot.log.
+- Trusted List Errors:
+  - Ensure trusted_accounts.py uses a fallback list or valid trusted_list.json.
+- Serveo Issues:
+  - Try a custom subdomain:
+ ```
+ ssh -R customsubdomain:80:localhost:3000 serveo.net
+ ```
+- Replit Issues:
+  - Ensure dependencies are installed and .env is loaded.
 
+Notes
+- Twitter API: Free tier has limits; consider Basic tier ($100/month) for production.
+- OAuth 2.0: Access tokens expire in 2 hours; refresh is not implemented.
+- Serveo: Temporary URLs change per session.
+- Replit: Provides permanent URLs but requires cloud setup.
 
-
+For issues, check bot.log or open an issue on the repository
 
 Example Bot Interaction
 A user replies to a tweet by @ExampleUser with “riddle me this” or mentions @RuggardBot.

@@ -1,4 +1,4 @@
-TRUSTED_ACCOUNTS = [
+[
     # Major Solana DeFi Protocols
     "JupiterExchange",
     "RaydiumProtocol", 

@@ -52,125 +52,70 @@ Replit Account (optional): For deployment on Replit’s Virtual Machine.
 GitHub Access: To fetch the trusted accounts list from https://github.com/devsyrem/turst-list.
 
 ## Setup and Installation
-1. Clone the Repository
-Clone the project to your local machine or Replit workspace:
-bash
+The Ruggard Twitter bot monitors tweets and replies with trustworthiness analyses of mentioned accounts. This guide provides two setup options: local setup using a Python virtual environment with Serveo for HTTPS tunneling, and cloud setup using Replit for a permanent HTTPS callback URL. Both setups use Twitter API v2 for streaming and v1.1 for posting replies.
 
-git clone https://github.com/your-username/ruggard.git
-cd ruggard
+Prerequisites
+- Twitter Developer Account:
+  - Create an app in the Twitter Developer Portal (https://developer.twitter.com).
+  - Set App Permissions to Read and Write.
+  - Enable OAuth 2.0 in User Authentication Settings with:
+    - Type of App: Web App, Automated App, or Bot.
+    - Website URL: https://example.com.
+  - Obtain:
+    - Client ID and Client Secret (OAuth 2.0).
+    - Consumer Key, Consumer Secret, Access Token, Access Token Secret (API v1.1).
 
-2. Install Dependencies
-Install the required Python libraries listed in requirements.txt:
-bash
+- Local Setup:
+  - Python 3.12 (recommended; 3.13+ requires imghdr patch).
+  - Git (optional, for cloning).
+  - Windows, macOS, or Linux with an SSH client (Windows 10/11 includes OpenSSH).
+  - VS Code or another code editor (optional).
 
-pip install -r requirements.txt
+- Replit Setup:
+  - Free account at https://replit.com.
+  - Internet browser.
 
-The dependencies are:
-tweepy==4.14.0: For Twitter API interactions.
+Local Setup
 
-python-dotenv==1.0.0: For loading environment variables.
+This setup runs the bot on your machine using a Python virtual environment and Serveo for HTTPS tunneling to handle Twitter OAuth 2.0 callbacks.
 
-requests==2.31.0: For fetching the trusted list from GitHub.
+Step 1: Clone or Download the Repository
+1. Clone the repository (requires Git): git clone <repository-url>
+   cd ruggard-miftah
 
-vaderSentiment==3.3.2: For sentiment analysis of tweets.
+2. Or download and extract the ZIP file to a folder (e.g., C:\Users\YourUsername\ruggard-miftah).
 
-textblob==0.18.0.post0: For additional text processing.
+Step 2: Set Up Python Virtual Environment
+1. Navigate to the project folder: cd C:\Users\YourUsername\ruggard-miftah
 
-3. Configure API Keys
-The bot requires Twitter API credentials and a bot handle. Configure these as environment variables:
-Create a .env File (for local or non-Replit environments):
-Copy .env.example to .env:
-bash
+2. Create a virtual environment: python -m venv venv
 
-cp .env.example .env
+3. Activate the virtual environment:
+- Windows (PowerShell or Command Prompt):
+  ```
+  .\venv\Scripts\Activate.ps1
+  ```
+- macOS/Linux:
+  ```
+  source venv/bin/activate
+  ```
 
-Edit .env with your Twitter API credentials and bot handle:
-plaintext
+Step 3: Install Dependencies
+1. Ensure requirements.txt contains:
+   tweepy==4.14.0
+   python-dotenv==1.0.0
+   requests==2.31.0
+   vaderSentiment==3.3.2
+   textblob==0.18.0.post0
 
-CONSUMER_KEY=your_consumer_key
-CONSUMER_SECRET=your_consumer_secret
-ACCESS_TOKEN=your_access_token
-ACCESS_TOKEN_SECRET=your_access_token_secret
-BOT_HANDLE=YourBotHandle
 
-Replace placeholders with actual values from the Twitter Developer Portal.
+3. Install dependencies: pip install -r requirements.txt
 
-Replit Secrets (for Replit deployment):
-In the Replit IDE, go to the “Secrets” tab (lock icon).
+Step 4: Configure Environment Variables
+1. Create a .env file in the project root:
 
-Add the following key-value pairs:
-CONSUMER_KEY: Your Twitter API consumer key.
 
-CONSUMER_SECRET: Your Twitter API consumer secret.
 
-ACCESS_TOKEN: Your Twitter API access token.
-
-ACCESS_TOKEN_SECRET: Your Twitter API access token secret.
-
-BOT_HANDLE: Your bot’s Twitter handle (without @, e.g., RuggardBot).
-
-4. Verify Trusted List Access
-The bot fetches a trusted accounts list from https://github.com/devsyrem/turst-list/blob/main/list. Ensure the URL is accessible and the JSON format is correct (array of objects with handle fields). The list is cached in trusted_list.json for 24 hours to reduce API calls.
-Running the Bot
-Locally or on a Server
-Make the Bash Script Executable:
-bash
-
-chmod +x run_bot.sh
-
-Run the Bot:
-bash
-
-./run_bot.sh
-
-This script creates a virtual environment, installs dependencies, loads environment variables, and starts bot.py in the background.
-
-Logs are saved to bot.log.
-
-Monitor Logs:
-bash
-
-tail -f bot.log
-
-Stop the Bot:
-Find the bot’s process ID (PID) from the script output.
-
-Terminate it:
-bash
-
-kill <PID>
-
-On Replit
-Create a Repl:
-Go to replit.com and create a new Python Repl.
-
-Upload all project files (bot.py, account_analysis.py, trusted_accounts.py, requirements.txt, run_bot.sh).
-
-Configure Secrets:
-In the Replit IDE, go to the “Secrets” tab and add CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET, and BOT_HANDLE.
-
-Configure .replit:
-Create or edit .replit in the project root:
-plaintext
-
-run = "bash run_bot.sh"
-
-Test Locally:
-Click “Run” in the Replit IDE or execute in the shell:
-bash
-
-./run_bot.sh
-
-Test by tweeting “riddle me this” as a reply or mentioning @YourBotHandle.
-
-Deploy on Reserved VM:
-Go to the “Deployments” tab in Replit.
-
-Select “Reserved VM” and deploy the project.
-
-Monitor deployment logs and check bot.log for runtime errors.
-
-Use a Shared CPU VM (starting at $0.20/day) for continuous operation.
 
 Example Bot Interaction
 A user replies to a tweet by @ExampleUser with “riddle me this” or mentions @RuggardBot.

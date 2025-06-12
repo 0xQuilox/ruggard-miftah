@@ -60,18 +60,25 @@ trusted_checker = TrustedAccounts(api)
 # OAuth 2.0 authentication
 class OAuthCallbackHandler(BaseHTTPRequestHandler):
     def do_GET(self):
+        logger.info(f"Received request for path: {self.path}")
         if self.path.startswith('/auth/twitter/callback'):
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
-            self.wfile.write(b"Authentication successful. You can close this window.")
+            self.wfile.write(b"<html><body><h2>Authentication successful!</h2><p>You can close this window and return to the console.</p></body></html>")
             global auth_response_url
             auth_response_url = self.path
+            logger.info("OAuth callback received successfully")
         else:
+            logger.warning(f"Unexpected request path: {self.path}")
             self.send_response(404)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
-            self.wfile.write(b"Not Found")
+            self.wfile.write(b"<html><body><h2>Not Found</h2><p>Expected /auth/twitter/callback</p></body></html>")
+    
+    def log_message(self, format, *args):
+        # Suppress default HTTP server logging to avoid clutter
+        pass
 
 def get_access_token():
     """
@@ -86,10 +93,16 @@ def get_access_token():
 
     # Generate authorization URL
     auth_url = oauth2_user_handler.get_authorization_url()
-    logger.info(f"Opening authorization URL: {auth_url}")
-
-    # Open browser for user to authorize
-    webbrowser.open(auth_url)
+    
+    print("\n" + "="*80)
+    print("🔐 AUTHORIZATION REQUIRED")
+    print("="*80)
+    print("Please visit this URL to authorize the bot:")
+    print(f"\n{auth_url}\n")
+    print("After authorization, return to this console.")
+    print("="*80 + "\n")
+    
+    logger.info(f"Authorization URL generated: {auth_url}")
 
     # Start local server to capture callback
     global auth_response_url

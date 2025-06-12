@@ -73,7 +73,7 @@ def get_access_token():
     """
     oauth2_user_handler = tweepy.OAuth2UserHandler(
         client_id=CLIENT_ID,
-        redirect_uri='https://localhost:3000/auth/twitter/callback',
+        redirect_uri='https://0.0.0.0:3000/auth/twitter/callback',
         scope=['tweet.read', 'tweet.write', 'users.read', 'offline.access'],
         client_secret=CLIENT_SECRET
     )
@@ -88,7 +88,7 @@ def get_access_token():
     # Start local server to capture callback
     global auth_response_url
     auth_response_url = None
-    server = HTTPServer(('localhost', 3000), OAuthCallbackHandler)
+    server = HTTPServer(('0.0.0.0', 3000), OAuthCallbackHandler)
     logger.info("Waiting for OAuth callback...")
     server.handle_request()
     server.server_close()

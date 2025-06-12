@@ -75,7 +75,7 @@ Prerequisites
   - Free account at https://replit.com.
   - Internet browser.
 
-Local Setup
+### Local Setup
 
 This setup runs the bot on your machine using a Python virtual environment and Serveo for HTTPS tunneling to handle Twitter OAuth 2.0 callbacks.
 
@@ -156,6 +156,62 @@ Step 6: Run the Bot
 - Click Authorize App.
 - The browser shows: "Authentication successful. You can close this window."
 6. Check bot.log for confirmation: cat bot.log  # Windows: Get-Content bot.log -Tail 1
+- Expect:
+  ```
+  2025-06-12 23:00:00,123 - INFO - Twitter API v1.1 initialized successfully
+  2025-06-12 23:00:01,456 - INFO - OAuth 2.0 access token obtained
+  2025-06-12 23:00:02,789 - INFO - Stream started successfully
+  ```
+
+Step 7: Test the Bot
+1. Using a secondary Twitter account, reply to a public tweet on https://x.com with:
+- "riddle me this"
+- @RuggardBot
+- Example:
+  - @TestUser tweets: "Test tweet!"
+  - Reply: "riddle me this"
+2. The bot should reply, e.g.:
+   @YourTestAccount
+
+ Trustworthiness of @TestUser
+
+:
+   Verified 
+   Age: 730 days 
+   Follower ratio: 1.20 
+   Bio length: 50 chars 
+   Avg likes: 10.5, Avg retweets: 5.2, Reply ratio: 0.30
+   Sentiment: Neutral (0.00) 
+   Followed by 3 trusted accounts 
+
+
+3. Check bot.log for:   2025-06-12 23:01:00,789 - INFO - Processing trigger from @YourTestAccount
+
+
+### Replit Setup
+
+This setup runs the bot on Replit, providing a permanent HTTPS callback URL without local tunneling.
+
+Step 1: Create a Replit Account
+1. Sign up at https://replit.com.
+
+Step 2: Create a Python Repl
+1. Click + New Repl > Python.
+2. Upload project files (bot.py, requirements.txt, trusted_accounts.py, account_analysis.py) via drag-and-drop or import from Git.
+
+Step 3: Install Dependencies
+1. Open requirements.txt in Replit and ensure it includes:
+
+
+
+   tweepy==4.14.0
+   python-dotenv==1.0.0
+   requests==2.31.0
+   vaderSentiment==3.3.2
+   textblob==0.18.0.post0
+
+
+
 
 
 Example Bot Interaction

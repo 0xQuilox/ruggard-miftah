@@ -84,9 +84,13 @@ def get_access_token():
     """
     Perform OAuth 2.0 authentication and return access token.
     """
+    # Use the correct Replit URL format - get from environment or use default
+    replit_url = os.getenv('REPL_URL', 'https://ruggard.replit.app')
+    callback_url = f"{replit_url}/auth/twitter/callback"
+    
     oauth2_user_handler = tweepy.OAuth2UserHandler(
         client_id=CLIENT_ID,
-        redirect_uri='https://ruggard.replit.app/auth/twitter/callback',
+        redirect_uri=callback_url,
         scope=['tweet.read', 'tweet.write', 'users.read', 'offline.access'],
         client_secret=CLIENT_SECRET
     )
@@ -100,15 +104,17 @@ def get_access_token():
     print("Please visit this URL to authorize the bot:")
     print(f"\n{auth_url}\n")
     print("After authorization, return to this console.")
+    print(f"Make sure your Twitter app callback URL is set to: {callback_url}")
     print("="*80 + "\n")
     
     logger.info(f"Authorization URL generated: {auth_url}")
+    logger.info(f"Callback URL: {callback_url}")
 
-    # Start local server to capture callback
+    # Start local server to capture callback on port 5000
     global auth_response_url
     auth_response_url = None
-    server = HTTPServer(('0.0.0.0', 80), OAuthCallbackHandler)
-    logger.info("Waiting for OAuth callback...")
+    server = HTTPServer(('0.0.0.0', 5000), OAuthCallbackHandler)
+    logger.info("Waiting for OAuth callback on port 5000...")
     server.handle_request()
     server.server_close()
 

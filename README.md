@@ -206,6 +206,32 @@ Step 3: Install Dependencies
    requests==2.31.0
    vaderSentiment==3.3.2
    textblob==0.18.0.post0
+2. Replit automatically installs dependencies when you run the project, or run: pip install -r requirements.txt
+
+
+Step 4: Configure Environment Variables
+1. In Replit's Secrets tab (lock icon), add:
+- CONSUMER_KEY: Your Consumer Key.
+- CONSUMER_SECRET: Your Consumer Secret.
+- ACCESS_TOKEN: Your Access Token.
+- ACCESS_TOKEN_SECRET: Your Access Token Secret.
+- BOT_HANDLE: RuggardBot.
+- CLIENT_ID: Your OAuth 2.0 Client ID.
+- CLIENT_SECRET: Your OAuth 2.0 Client Secret.
+2. Alternatively, create a .env file (less secure):
+
+
+
+   CONSUMER_KEY=your_consumer_key
+   CONSUMER_SECRET=your_consumer_secret
+   ACCESS_TOKEN=your_access_token
+   ACCESS_TOKEN_SECRET=your_access_token_secret
+   BOT_HANDLE=RuggardBot
+   CLIENT_ID=your_oauth2_client_id
+   CLIENT_SECRET=your_oauth2_client_secret
+
+
+
 
 2. Replit automatically installs dependencies when you run the project, or run: pip install -r requirements.txt
 

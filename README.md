@@ -113,8 +113,49 @@ Step 3: Install Dependencies
 
 Step 4: Configure Environment Variables
 1. Create a .env file in the project root:
+   CONSUMER_KEY=your_consumer_key
+   CONSUMER_SECRET=your_consumer_secret
+   ACCESS_TOKEN=your_access_token
+   ACCESS_TOKEN_SECRET=your_access_token_secret
+   BOT_HANDLE=RuggardBot
+   CLIENT_ID=your_oauth2_client_id
+   CLIENT_SECRET=your_oauth2_client_secret
 
 
+2. Replace placeholders with your Twitter API credentials.
+
+Step 5: Set Up Serveo for HTTPS Tunneling
+Serveo provides an HTTPS callback URL for Twitter OAuth 2.0 without local installations.
+
+1. Verify SSH client:
+- On Windows:
+  ```
+  ssh -V
+  ```
+- If missing, enable OpenSSH: Settings > Apps > Optional Features > Add a feature > OpenSSH Client.
+- On macOS/Linux, SSH is typically pre-installed.
+
+2. Start Serveo tunnel: ssh -R 80:localhost:3000 serveo.net
+- Output shows an HTTPS URL, e.g., https://randomsubdomain.serveo.net.
+- Copy the URL. The callback URL is https://randomsubdomain.serveo.net/auth/twitter/callback.
+- Keep the terminal open.
+
+3. Update Twitter Developer Portal:
+- Go to Projects & Apps > YourApp > Edit > User Authentication Settings.
+- Add the callback URL (e.g., https://randomsubdomain.serveo.net/auth/twitter/callback).
+- Save.
+
+Step 6: Run the Bot
+1. Open a new terminal in the project folder (keep Serveo running).
+2. Activate the virtual environment (if not active):  .\venv\Scripts\Activate.ps1
+
+3. Run the bot:  python bot.py
+4. Enter the Serveo HTTPS URL (e.g., https://randomsubdomain.serveo.net) when prompted.
+5. A browser opens for Twitter authorization:
+- Log in with the bot's Twitter account (e.g., @RuggardBot).
+- Click Authorize App.
+- The browser shows: "Authentication successful. You can close this window."
+6. Check bot.log for confirmation: cat bot.log  # Windows: Get-Content bot.log -Tail 1
 
 
 Example Bot Interaction

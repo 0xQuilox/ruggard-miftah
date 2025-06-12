@@ -60,12 +60,18 @@ trusted_checker = TrustedAccounts(api)
 # OAuth 2.0 authentication
 class OAuthCallbackHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/html')
-        self.end_headers()
-        self.wfile.write(b"Authentication successful. You can close this window.")
-        global auth_response_url
-        auth_response_url = self.path
+        if self.path.startswith('/auth/twitter/callback'):
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write(b"Authentication successful. You can close this window.")
+            global auth_response_url
+            auth_response_url = self.path
+        else:
+            self.send_response(404)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write(b"Not Found")
 
 def get_access_token():
     """

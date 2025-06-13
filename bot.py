@@ -46,6 +46,9 @@ if missing_vars:
     logger.error(f"Missing environment variables: {', '.join(missing_vars)}")
     raise EnvironmentError(f"Missing environment variables: {', '.join(missing_vars)}")
 
+# Optional BEARER_TOKEN for v2 streaming (will be generated if not provided)
+BEARER_TOKEN = os.getenv('BEARER_TOKEN')
+
 # Initialize Twitter API v1.1 for posting and analysis
 try:
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -105,9 +108,19 @@ class TwitterBot(tweepy.StreamingClient):
         Initialize Twitter bot streaming client using OAuth 1.0a.
         :param api: Tweepy API instance for v1.1 interactions
         """
-        # For OAuth 1.0a, we need to create a bearer token for v2 streaming
-        # This is done automatically by tweepy when using OAuth 1.0a credentials
-        bearer_token = api.get_bearer_token()
+        # Use the BEARER_TOKEN from environment for v2 streaming
+        bearer_token = os.getenv('BEARER_TOKEN')
+        if not bearer_token:
+            # Create client using OAuth 2.0 for v2 streaming
+            client = tweepy.Client(
+                consumer_key=CONSUMER_KEY,
+                consumer_secret=CONSUMER_SECRET,
+                access_token=ACCESS_TOKEN,
+                access_token_secret=ACCESS_TOKEN_SECRET
+            )
+            # Get bearer token for streaming
+            bearer_token = client.bearer_token
+        
         super().__init__(bearer_token)
         self.api = api
 

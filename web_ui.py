@@ -43,43 +43,21 @@ class BotStatusUI:
             except Exception as e:
                 return jsonify({'logs': [f'Error reading logs: {str(e)}']})
         
-        @self.app.route('/auth/twitter/callback')
-        def oauth_callback():
-            logger.info(f"OAuth callback received: {request.url}")
-            
-            # Check if we have the required parameters
-            if 'code' in request.args and 'state' in request.args:
-                logger.info("Authorization code received from Twitter")
-                
-                # Store the full callback URL for token exchange
-                import bot
-                bot.auth_response_url = request.url
-                
-                success_html = """
-                <html>
-                    <head><title>Twitter OAuth Success</title></head>
-                    <body style='font-family: Arial, sans-serif; text-align: center; padding: 50px;'>
-                        <h2 style='color: #1DA1F2;'>Twitter Authorization Successful!</h2>
-                        <p>The bot has been authorized and is now processing your request.</p>
-                        <p>You can safely close this window and return to the console.</p>
-                        <p style='color: #666; font-size: 12px;'>OAuth 2.0 flow completed with PKCE verification</p>
-                    </body>
-                </html>
-                """
-                return success_html
-            else:
-                logger.warning("Missing required OAuth parameters")
-                error_html = """
-                <html>
-                    <head><title>OAuth Error</title></head>
-                    <body style='font-family: Arial, sans-serif; text-align: center; padding: 50px;'>
-                        <h2 style='color: #e74c3c;'>Authorization Failed</h2>
-                        <p>Missing required parameters from Twitter OAuth callback.</p>
-                        <p>Please try the authorization process again.</p>
-                    </body>
-                </html>
-                """
-                return error_html, 400
+        @self.app.route('/auth/info')
+        def auth_info():
+            """Information page about OAuth 1.0a authentication"""
+            info_html = """
+            <html>
+                <head><title>OAuth 1.0a Info</title></head>
+                <body style='font-family: Arial, sans-serif; text-align: center; padding: 50px;'>
+                    <h2 style='color: #1DA1F2;'>OAuth 1.0a Authentication</h2>
+                    <p>This bot uses OAuth 1.0a with pre-configured access tokens.</p>
+                    <p>No web authorization flow is required!</p>
+                    <p style='color: #666; font-size: 12px;'>Using Consumer Key, Consumer Secret, Access Token, and Access Token Secret</p>
+                </body>
+            </html>
+            """
+            return info_html
     
     def update_status(self, **kwargs):
         """Update bot status"""

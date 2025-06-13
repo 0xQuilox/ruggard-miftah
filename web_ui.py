@@ -63,8 +63,19 @@ class BotStatusUI:
                 logger.info(f"OAuth callback received with code: {code[:10]}...")
                 
                 # Exchange code for access token
-                from bot import oauth_tokens, CLIENT_ID, CLIENT_SECRET
                 import tweepy
+                import os
+                
+                CLIENT_ID = os.getenv('CLIENT_ID')
+                CLIENT_SECRET = os.getenv('CLIENT_SECRET')
+                
+                # Import oauth_tokens from bot module
+                import sys
+                if 'bot' in sys.modules:
+                    from bot import oauth_tokens
+                else:
+                    # Fallback if bot module not loaded yet
+                    oauth_tokens = {}
                 
                 # Create OAuth2 handler with the same configuration as in bot.py
                 oauth2_user_handler = tweepy.OAuth2UserHandler(

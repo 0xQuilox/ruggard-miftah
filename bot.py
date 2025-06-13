@@ -78,51 +78,49 @@ NEGATIVE_INTROS = ["Hmm, some red flags here...", "Proceed with caution!", "Wort
 NEUTRAL_INTROS = ["Mixed signals here.", "Hard to say definitively.", "Pretty average account.", "Standard profile."]
 
 # Global variable to store OAuth callback result
-auth_response_url = None
+oauth_tokens = {}
 
 def get_access_token():
     """
-    Use OAuth 1.0a authentication with existing access tokens.
-    This eliminates the need for web-based callback flows.
+    Get access token using OAuth 2.0 flow.
+    Returns access token for API usage.
     """
     print("\n" + "="*80)
-    print("🔐 OAUTH 1.0A AUTHENTICATION")
+    print("🔐 OAUTH 2.0 AUTHENTICATION")
     print("="*80)
-    print("Using OAuth 1.0a with pre-configured access tokens:")
-    print("✓ Consumer Key (API Key)")
-    print("✓ Consumer Secret (API Secret)")
-    print("✓ Access Token")
-    print("✓ Access Token Secret")
-    print("\nNo web authorization flow required!")
-    print("="*80 + "\n")
     
-    logger.info("Using OAuth 1.0a authentication with existing tokens")
-    
-    # Return the existing access token - OAuth 1.0a doesn't need bearer tokens
-    # The tweepy API will handle authentication automatically
-    return ACCESS_TOKEN
+    try:
+        # Create OAuth 2.0 handler
+        oauth2_user_handler = tweepy.OAuth2UserHandler(
+            client_id=CLIENT_ID,
+            redirect_uri=f"{os.getenv('REPL_URL', 'https://ruggard.replit.app')}/auth/twitter/callback",
+            scope=["tweet.read", "tweet.write", "users.read", "follows.read"],
+            client_secret=CLIENT_SECRET
+        )
+        
+        # Get authorization URL
+        authorization_url = oauth2_user_handler.get_authorization_url()
+        
+        print(f"🔗 Please visit this URL to authorize the application:")
+        print(f"🌐 {authorization_url}")
+        print("="*80 + "\n")
+        
+        logger.info(f"OAuth authorization URL generated: {authorization_url}")
+        return authorization_url
+        
+    except Exception as e:
+        logger.error(f"Failed to generate OAuth URL: {e}")
+        return None
 
 class TwitterBot(tweepy.StreamingClient):
-    def __init__(self, api):
+    def __init__(self, bearer_token, api_client):
         """
-        Initialize Twitter bot streaming client using OAuth 1.0a.
-        :param api: Tweepy API instance for v1.1 interactions
+        Initialize Twitter bot streaming client using OAuth 2.0.
+        :param bearer_token: Bearer token for v2 streaming
+        :param api_client: Tweepy Client instance for v2 interactions
         """
-        # Use the BEARER_TOKEN from environment for v2 streaming
-        bearer_token = os.getenv('BEARER_TOKEN')
-        if not bearer_token:
-            # Create client using OAuth 2.0 for v2 streaming
-            client = tweepy.Client(
-                consumer_key=CONSUMER_KEY,
-                consumer_secret=CONSUMER_SECRET,
-                access_token=ACCESS_TOKEN,
-                access_token_secret=ACCESS_TOKEN_SECRET
-            )
-            # Get bearer token for streaming
-            bearer_token = client.bearer_token
-        
         super().__init__(bearer_token)
-        self.api = api
+        self.client = api_client
 
     def on_tweet(self, tweet):
         """
@@ -131,11 +129,12 @@ class TwitterBot(tweepy.StreamingClient):
         """
         try:
             # Skip if tweet is from the bot itself
-            if tweet.author_id == self.api.get_user(screen_name=BOT_HANDLE).id:
+            bot_user = self.client.get_me().data
+            if tweet.author_id == bot_user.id:
                 return
 
             # Check if tweet is a reply or mentions the bot
-            is_reply = tweet.referenced_tweets and tweet.referenced_tweets[0].type == 'replied_to'
+            is_reply = tweet.referenced_tweets and any(ref.type == 'replied_to' for ref in tweet.referenced_tweets)
             text = tweet.text.lower() if tweet.text else ''
             mentions_bot = f'@{BOT_HANDLE}' in text
             contains_trigger = 'riddle me this' in text
@@ -157,11 +156,11 @@ class TwitterBot(tweepy.StreamingClient):
             logger.info(f"Processing trigger from @{tweet.author_id}: {tweet.text}")
             ui_instance.update_status(tweets_processed=ui_instance.bot_status['tweets_processed'] + 1)
 
-            # Get original tweet and author using v1.1 API
-            original_tweet_id = tweet.referenced_tweets[0].id
-            original_tweet = self.api.get_status(original_tweet_id, tweet_mode='extended')
-            original_author = original_tweet.user
-            requester = self.api.get_user(user_id=tweet.author_id)
+            # Get original tweet and author using v2 API
+            original_tweet_id = next(ref.id for ref in tweet.referenced_tweets if ref.type == 'replied_to')
+            original_tweet = self.client.get_tweet(original_tweet_id, expansions=['author_id'])
+            original_author = self.client.get_user(id=original_tweet.data.author_id)
+            requester = self.client.get_user(id=tweet.author_id)
 
             # Perform analysis and trust check in parallel
             analysis_thread = threading.Thread(target=self.get_analysis, args=(original_author,))
@@ -184,13 +183,12 @@ class TwitterBot(tweepy.StreamingClient):
                 self.trust_result
             )
 
-            # Post reply using v1.1 API
-            self.api.update_status(
-                status=reply_text,
-                in_reply_to_status_id=tweet.id,
-                auto_populate_reply_metadata=True
+            # Post reply using v2 API
+            self.client.create_tweet(
+                text=reply_text,
+                in_reply_to_tweet_id=tweet.id
             )
-            logger.info(f"Replied to @{requester.screen_name} about @{original_author.screen_name}")
+            logger.info(f"Replied to @{requester.data.username} about @{original_author.data.username}")
 
         except tweepy.TweepyException as e:
             logger.error(f"Tweepy error processing tweet {tweet.id}: {e}")
@@ -318,27 +316,54 @@ class TwitterBot(tweepy.StreamingClient):
 
 def start_bot():
     """
-    Start the Twitter bot stream.
+    Start the Twitter bot stream using OAuth 2.0.
     """
     logger.info("Starting Twitter bot...")
     ui_instance.update_status(
         running=True, 
         start_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-        oauth_status='Starting...'
+        oauth_status='Starting OAuth 2.0...'
     )
     
     try:
-        ui_instance.update_status(oauth_status='Authenticating with OAuth 1.0a...')
-        get_access_token()  # This just validates the tokens are present
+        # Step 1: Generate OAuth URL
+        ui_instance.update_status(oauth_status='Generating OAuth URL...')
+        auth_url = get_access_token()
+        
+        if not auth_url:
+            raise Exception("Failed to generate OAuth authorization URL")
+        
+        ui_instance.update_status(oauth_status='Waiting for OAuth callback...')
+        
+        # Step 2: Wait for OAuth callback
+        max_wait = 300  # 5 minutes
+        wait_count = 0
+        while 'access_token' not in oauth_tokens and wait_count < max_wait:
+            time.sleep(1)
+            wait_count += 1
+        
+        if 'access_token' not in oauth_tokens:
+            raise Exception("OAuth authentication timeout - no callback received")
+        
+        # Step 3: Create authenticated client
+        ui_instance.update_status(oauth_status='Creating authenticated client...')
+        
+        # Use OAuth 2.0 client
+        client = tweepy.Client(
+            bearer_token=BEARER_TOKEN,
+            access_token=oauth_tokens['access_token']['access_token']
+        )
+        
         ui_instance.update_status(oauth_status='Authenticated', stream_status='Connecting...')
         
-        stream = TwitterBot(api)
-        # Add stream rules for triggers
+        # Step 4: Start streaming
+        stream = TwitterBot(BEARER_TOKEN, client)
         stream.add_rules(tweepy.StreamRule(f'"riddle me this" OR @{BOT_HANDLE}'))
-        ui_instance.update_status(stream_status='Connected', oauth_status='OAuth 1.0a Active')
+        ui_instance.update_status(stream_status='Connected', oauth_status='OAuth 2.0 Active')
         
         stream.filter(tweet_fields=['referenced_tweets'], expansions=['author_id'])
         logger.info("Stream started successfully")
+        
     except Exception as e:
         logger.error(f"Failed to start stream: {e}")
         ui_instance.update_status(

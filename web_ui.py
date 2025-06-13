@@ -43,21 +43,56 @@ class BotStatusUI:
             except Exception as e:
                 return jsonify({'logs': [f'Error reading logs: {str(e)}']})
         
-        @self.app.route('/auth/info')
-        def auth_info():
-            """Information page about OAuth 1.0a authentication"""
-            info_html = """
-            <html>
-                <head><title>OAuth 1.0a Info</title></head>
-                <body style='font-family: Arial, sans-serif; text-align: center; padding: 50px;'>
-                    <h2 style='color: #1DA1F2;'>OAuth 1.0a Authentication</h2>
-                    <p>This bot uses OAuth 1.0a with pre-configured access tokens.</p>
-                    <p>No web authorization flow is required!</p>
-                    <p style='color: #666; font-size: 12px;'>Using Consumer Key, Consumer Secret, Access Token, and Access Token Secret</p>
-                </body>
-            </html>
-            """
-            return info_html
+        @self.app.route('/auth/twitter/callback')
+        def twitter_callback():
+            """Handle Twitter OAuth 2.0 callback"""
+            try:
+                # Get authorization code from callback
+                code = request.args.get('code')
+                state = request.args.get('state')
+                error = request.args.get('error')
+                
+                if error:
+                    logger.error(f"OAuth callback error: {error}")
+                    return f"<h2>OAuth Error</h2><p>{error}</p>"
+                
+                if not code:
+                    logger.error("No authorization code received")
+                    return "<h2>OAuth Error</h2><p>No authorization code received</p>"
+                
+                logger.info(f"OAuth callback received with code: {code[:10]}...")
+                
+                # Exchange code for access token
+                from bot import oauth_tokens, CLIENT_ID, CLIENT_SECRET
+                
+                oauth2_user_handler = tweepy.OAuth2UserHandler(
+                    client_id=CLIENT_ID,
+                    redirect_uri=f"{request.url_root}auth/twitter/callback",
+                    scope=["tweet.read", "tweet.write", "users.read", "follows.read"],
+                    client_secret=CLIENT_SECRET
+                )
+                
+                access_token = oauth2_user_handler.fetch_token(
+                    f"{request.url_root}auth/twitter/callback?code={code}&state={state}"
+                )
+                
+                oauth_tokens['access_token'] = access_token
+                logger.info("OAuth 2.0 authentication successful!")
+                
+                return """
+                <html>
+                    <head><title>OAuth Success</title></head>
+                    <body style='font-family: Arial, sans-serif; text-align: center; padding: 50px;'>
+                        <h2 style='color: #1DA1F2;'>✅ Authentication Successful!</h2>
+                        <p>The bot has been successfully authenticated with Twitter.</p>
+                        <p>You can now close this window and return to your bot.</p>
+                    </body>
+                </html>
+                """
+                
+            except Exception as e:
+                logger.error(f"OAuth callback processing error: {e}")
+                return f"<h2>OAuth Error</h2><p>Failed to process callback: {str(e)}</p>"
     
     def update_status(self, **kwargs):
         """Update bot status"""

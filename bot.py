@@ -86,7 +86,7 @@ class OAuthCallbackHandler(BaseHTTPRequestHandler):
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
-                self.wfile.write(b"""
+                self.wfile.write(b
                 <html>
                     <head><title>Twitter OAuth Success</title></head>
                     <body style='font-family: Arial, sans-serif; text-align: center; padding: 50px;'>

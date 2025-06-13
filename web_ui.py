@@ -44,13 +44,18 @@ class BotStatusUI:
                 return jsonify({'logs': [f'Error reading logs: {str(e)}']})
         
         @self.app.route('/auth/twitter/callback')
+        @self.app.route('/')
         def twitter_callback():
-            """Handle Twitter OAuth 2.0 callback"""
+            """Handle Twitter OAuth 2.0 callback at both /auth/twitter/callback and / paths"""
             try:
                 # Get authorization code from callback
                 code = request.args.get('code')
                 state = request.args.get('state')
                 error = request.args.get('error')
+                
+                # If no OAuth parameters, show dashboard instead
+                if not code and not error and not state:
+                    return render_template('dashboard.html')
                 
                 if error:
                     logger.error(f"OAuth callback error: {error}")
@@ -80,7 +85,7 @@ class BotStatusUI:
                 # Create OAuth2 handler with the same configuration as in bot.py
                 oauth2_user_handler = tweepy.OAuth2UserHandler(
                     client_id=CLIENT_ID,
-                    redirect_uri=f"{request.url_root.replace('http://', 'https://')}auth/twitter/callback",
+                    redirect_uri=request.url_root.replace('http://', 'https://').rstrip('/') + '/',
                     scope=["tweet.read", "tweet.write", "users.read", "follows.read"],
                     client_secret=CLIENT_SECRET
                 )

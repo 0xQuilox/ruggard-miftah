@@ -90,10 +90,13 @@ def get_access_token():
     print("="*80)
     
     try:
-        # Create OAuth 2.0 handler
+        # Create OAuth 2.0 handler - use root path for callback
+        repl_url = os.getenv('REPL_URL', 'https://ruggard.replit.app')
+        callback_url = f"{repl_url}/"  # Use root path as callback
+        
         oauth2_user_handler = tweepy.OAuth2UserHandler(
             client_id=CLIENT_ID,
-            redirect_uri=f"{os.getenv('REPL_URL', 'https://ruggard.replit.app')}/auth/twitter/callback",
+            redirect_uri=callback_url,
             scope=["tweet.read", "tweet.write", "users.read", "follows.read"],
             client_secret=CLIENT_SECRET
         )

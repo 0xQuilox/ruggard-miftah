@@ -257,3 +257,210 @@
 2025-06-13 00:22:25,905 - ERROR - Failed to receive OAuth callback
 2025-06-13 00:22:25,905 - ERROR - Failed to start stream: OAuth 2.0 authentication failed
 2025-06-13 00:22:25,905 - ERROR - Bot crashed: OAuth 2.0 authentication failed. Restarting in 60 seconds...
+2025-06-13 00:24:07,255 - INFO - Twitter API v1.1 initialized successfully
+2025-06-13 00:24:07,264 - INFO - Loaded trusted list from cache
+2025-06-13 00:24:07,264 - INFO - Web UI started on port 8080
+2025-06-13 00:24:07,265 - INFO - Starting Twitter bot...
+2025-06-13 00:24:07,267 - INFO - OAuth 2.0 authorization URL generated with PKCE: https://twitter.com/i/oauth2/authorize?response_type=code&client_id=MDJFRFlJdjFDbWNGcFFpRHg1WFU6MTpjaQ&redirect_uri=https%3A%2F%2Fruggard.replit.app%2Fauth%2Ftwitter%2Fcallback&scope=tweet.read+tweet.write+users.read+offline.access&state=VrGVzVkx4gnp5UhEt0x2uh6JqnugZY&code_challenge=ecrJjo8Caa7dPqhKB4vodO0PEOnyHPmyYAsjT6KABjg&code_challenge_method=S256
+2025-06-13 00:24:07,267 - INFO - Callback URL: https://ruggard.replit.app/auth/twitter/callback
+2025-06-13 00:24:07,268 - INFO - Waiting for OAuth 2.0 callback on port 5000...
+2025-06-13 00:24:07,274 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://172.31.128.4:8080
+2025-06-13 00:24:07,274 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-13 00:24:17,323 - INFO - OAuth callback received for path: /
+2025-06-13 00:24:17,323 - WARNING - Unexpected request path: /
+2025-06-13 00:24:17,324 - ERROR - Failed to receive OAuth callback
+2025-06-13 00:24:17,324 - ERROR - Failed to start stream: OAuth 2.0 authentication failed
+2025-06-13 00:24:17,324 - ERROR - Bot crashed: OAuth 2.0 authentication failed. Restarting in 60 seconds...
+2025-06-13 00:24:17,515 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:17] "GET / HTTP/1.1" 200 -
+2025-06-13 00:24:25,860 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:25] "GET / HTTP/1.1" 200 -
+2025-06-13 00:24:25,948 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:25] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:24:26,460 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:26] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:24:29,905 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:29] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:24:29,908 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:29] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:24:31,957 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:31] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:24:34,959 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:34] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:24:35,962 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:35] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:24:35,966 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:35] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:24:39,896 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:39] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:24:39,900 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:39] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:24:40,949 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:40] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:24:45,012 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:45] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:24:45,919 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:45] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:24:45,922 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:45] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:24:49,893 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:49] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:24:49,894 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:49] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:24:50,917 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:50] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:24:54,901 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:54] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:24:55,901 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:55] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:24:55,902 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:55] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:24:59,917 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:59] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:24:59,927 - INFO - 172.31.128.4 - - [13/Jun/2025 00:24:59] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:25:00,917 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:00] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:04,899 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:04] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:05,905 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:05] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:25:05,908 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:05] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:09,962 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:09] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:25:09,965 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:09] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:10,890 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:10] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:15,092 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:15] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:15,907 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:15] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:25:15,918 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:15] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:17,324 - INFO - Starting Twitter bot...
+2025-06-13 00:25:17,325 - INFO - OAuth 2.0 authorization URL generated with PKCE: https://twitter.com/i/oauth2/authorize?response_type=code&client_id=MDJFRFlJdjFDbWNGcFFpRHg1WFU6MTpjaQ&redirect_uri=https%3A%2F%2Fruggard.replit.app%2Fauth%2Ftwitter%2Fcallback&scope=tweet.read+tweet.write+users.read+offline.access&state=oxBbuA0YxL5P5kQmbGsPIgB2AnyEyG&code_challenge=5owv5t_6tUhF1v-JVToRgmyvJjr0FAM8dJWn-e8SAvQ&code_challenge_method=S256
+2025-06-13 00:25:17,325 - INFO - Callback URL: https://ruggard.replit.app/auth/twitter/callback
+2025-06-13 00:25:17,326 - INFO - Waiting for OAuth 2.0 callback on port 5000...
+2025-06-13 00:25:20,056 - INFO - OAuth callback received for path: /
+2025-06-13 00:25:20,057 - WARNING - Unexpected request path: /
+2025-06-13 00:25:20,057 - ERROR - Failed to receive OAuth callback
+2025-06-13 00:25:20,057 - ERROR - Failed to start stream: OAuth 2.0 authentication failed
+2025-06-13 00:25:20,057 - ERROR - Bot crashed: OAuth 2.0 authentication failed. Restarting in 60 seconds...
+2025-06-13 00:25:22,424 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:22] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:27,427 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:27] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:25:27,430 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:27] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:27,679 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:27] "GET / HTTP/1.1" 200 -
+2025-06-13 00:25:30,076 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:30] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:30,079 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:30] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:25:31,030 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:31] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:35,099 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:35] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:35,909 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:35] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:35,914 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:35] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:25:40,094 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:40] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:40,099 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:40] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:25:40,887 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:40] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:45,100 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:45] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:45,908 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:45] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:25:45,910 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:45] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:50,108 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:50] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:50,116 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:50] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:25:50,939 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:50] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:55,106 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:55] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:55,917 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:55] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:25:55,920 - INFO - 172.31.128.4 - - [13/Jun/2025 00:25:55] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:26:00,099 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:00] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:26:00,100 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:00] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:00,909 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:00] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:05,099 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:05] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:05,985 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:05] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:26:05,988 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:05] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:10,097 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:10] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:26:10,099 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:10] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:10,897 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:10] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:15,114 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:15] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:15,896 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:15] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:15,901 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:15] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:26:20,058 - INFO - Starting Twitter bot...
+2025-06-13 00:26:20,058 - INFO - OAuth 2.0 authorization URL generated with PKCE: https://twitter.com/i/oauth2/authorize?response_type=code&client_id=MDJFRFlJdjFDbWNGcFFpRHg1WFU6MTpjaQ&redirect_uri=https%3A%2F%2Fruggard.replit.app%2Fauth%2Ftwitter%2Fcallback&scope=tweet.read+tweet.write+users.read+offline.access&state=aOIfauVZUpzOb9jvjE9uxtcfPaLRzs&code_challenge=7IeCe0YuNxoDN_tRySV7xDVvi3qQkjbJT_izwDxX0Vg&code_challenge_method=S256
+2025-06-13 00:26:20,058 - INFO - Callback URL: https://ruggard.replit.app/auth/twitter/callback
+2025-06-13 00:26:20,059 - INFO - Waiting for OAuth 2.0 callback on port 5000...
+2025-06-13 00:26:20,087 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:20] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:26:20,090 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:20] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:20,901 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:20] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:23,675 - INFO - OAuth callback received for path: /
+2025-06-13 00:26:23,675 - WARNING - Unexpected request path: /
+2025-06-13 00:26:23,675 - ERROR - Failed to receive OAuth callback
+2025-06-13 00:26:23,675 - ERROR - Failed to start stream: OAuth 2.0 authentication failed
+2025-06-13 00:26:23,675 - ERROR - Bot crashed: OAuth 2.0 authentication failed. Restarting in 60 seconds...
+2025-06-13 00:26:26,210 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:26] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:26,281 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:26] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:26:29,916 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:29] "GET / HTTP/1.1" 200 -
+2025-06-13 00:26:31,967 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:31] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:33,803 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:33] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:33,940 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:33] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:26:37,410 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:37] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:26:37,414 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:37] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:39,028 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:39] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:40,884 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:40] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:43,817 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:43] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:43,821 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:43] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:26:45,904 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:45] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:26:45,907 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:45] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:48,829 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:48] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:50,918 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:50] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:54,260 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:54] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:26:54,328 - INFO - 172.31.128.4 - - [13/Jun/2025 00:26:54] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:27:02,045 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:02] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:02,049 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:02] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:27:02,297 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:02] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:04,376 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:04] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:04,382 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:04] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:27:06,176 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:06] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:27:06,179 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:06] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:09,555 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:09] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:14,605 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:14] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:14,610 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:14] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:27:14,865 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:14] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:23,676 - INFO - Starting Twitter bot...
+2025-06-13 00:27:23,676 - INFO - OAuth 2.0 authorization URL generated with PKCE: https://twitter.com/i/oauth2/authorize?response_type=code&client_id=MDJFRFlJdjFDbWNGcFFpRHg1WFU6MTpjaQ&redirect_uri=https%3A%2F%2Fruggard.replit.app%2Fauth%2Ftwitter%2Fcallback&scope=tweet.read+tweet.write+users.read+offline.access&state=JhGM9K63ldTnn8ysAK8CSg9yhuougn&code_challenge=NG1SxjBtQfJKtw0PFp5EdoPP_F_M2j63fhmNDHQJ7S0&code_challenge_method=S256
+2025-06-13 00:27:23,677 - INFO - Callback URL: https://ruggard.replit.app/auth/twitter/callback
+2025-06-13 00:27:23,677 - INFO - Waiting for OAuth 2.0 callback on port 5000...
+2025-06-13 00:27:23,878 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:23] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:27:24,010 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:24] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:29,190 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:29] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:27:29,192 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:29] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:29,898 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:29] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:29,901 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:29] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:27:33,405 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:33] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:33,455 - INFO - OAuth callback received for path: /
+2025-06-13 00:27:33,456 - WARNING - Unexpected request path: /
+2025-06-13 00:27:33,456 - ERROR - Failed to receive OAuth callback
+2025-06-13 00:27:33,456 - ERROR - Failed to start stream: OAuth 2.0 authentication failed
+2025-06-13 00:27:33,456 - ERROR - Bot crashed: OAuth 2.0 authentication failed. Restarting in 60 seconds...
+2025-06-13 00:27:36,857 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:36] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:27:36,861 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:36] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:39,587 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:39] "GET / HTTP/1.1" 200 -
+2025-06-13 00:27:41,380 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:41] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:41,589 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:41] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:27:41,704 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:41] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:45,909 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:45] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:45,910 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:45] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:27:46,676 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:46] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:51,046 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:51] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:51,587 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:51] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:51,590 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:51] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:27:55,882 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:55] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:27:55,884 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:55] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:27:56,581 - INFO - 172.31.128.4 - - [13/Jun/2025 00:27:56] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:00,917 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:00] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:01,592 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:01] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:01,593 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:01] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:28:05,896 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:05] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:28:05,898 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:05] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:06,597 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:06] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:10,891 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:10] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:11,587 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:11] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:28:11,589 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:11] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:15,925 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:15] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:28:15,927 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:15] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:16,604 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:16] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:20,916 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:20] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:21,586 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:21] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:28:21,588 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:21] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:25,895 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:25] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:28:25,898 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:25] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:26,615 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:26] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:31,246 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:31] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:32,169 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:32] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:32,194 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:32] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:28:33,456 - INFO - Starting Twitter bot...
+2025-06-13 00:28:33,457 - INFO - OAuth 2.0 authorization URL generated with PKCE: https://twitter.com/i/oauth2/authorize?response_type=code&client_id=MDJFRFlJdjFDbWNGcFFpRHg1WFU6MTpjaQ&redirect_uri=https%3A%2F%2Fruggard.replit.app%2Fauth%2Ftwitter%2Fcallback&scope=tweet.read+tweet.write+users.read+offline.access&state=Kq9WN2wAFNgJ71EB6wGrWJnc0qU03I&code_challenge=q0ZIB15Gzx2RWd9pP8dWy420yKLbbmjoH2LOSEnJ5RQ&code_challenge_method=S256
+2025-06-13 00:28:33,457 - INFO - Callback URL: https://ruggard.replit.app/auth/twitter/callback
+2025-06-13 00:28:33,458 - INFO - Waiting for OAuth 2.0 callback on port 5000...
+2025-06-13 00:28:39,905 - INFO - OAuth callback received for path: /
+2025-06-13 00:28:39,905 - WARNING - Unexpected request path: /
+2025-06-13 00:28:39,906 - ERROR - Failed to receive OAuth callback
+2025-06-13 00:28:39,906 - ERROR - Failed to start stream: OAuth 2.0 authentication failed
+2025-06-13 00:28:39,906 - ERROR - Bot crashed: OAuth 2.0 authentication failed. Restarting in 60 seconds...
+2025-06-13 00:28:49,562 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:49] "GET / HTTP/1.1" 200 -
+2025-06-13 00:28:55,225 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:55] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:28:55,259 - INFO - 172.31.128.4 - - [13/Jun/2025 00:28:55] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:29:34,414 - INFO - 172.31.128.4 - - [13/Jun/2025 00:29:34] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:29:34,416 - INFO - 172.31.128.4 - - [13/Jun/2025 00:29:34] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:29:34,730 - INFO - 172.31.128.4 - - [13/Jun/2025 00:29:34] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:29:34,730 - INFO - 172.31.128.4 - - [13/Jun/2025 00:29:34] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:29:35,234 - INFO - 172.31.128.4 - - [13/Jun/2025 00:29:35] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:29:35,236 - INFO - 172.31.128.4 - - [13/Jun/2025 00:29:35] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:29:35,926 - INFO - 172.31.128.4 - - [13/Jun/2025 00:29:35] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:29:35,927 - INFO - 172.31.128.4 - - [13/Jun/2025 00:29:35] "GET /api/logs HTTP/1.1" 200 -

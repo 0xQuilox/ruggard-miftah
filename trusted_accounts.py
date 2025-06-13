@@ -87,8 +87,22 @@ class TrustedAccounts:
                 logger.warning(f"Invalid target handle: {target_handle}")
                 return False, 0, "Invalid handle"
 
+            # Check cache first
+            if hasattr(self, 'trust_cache'):
+                cache_key = target_handle
+                current_time = datetime.now()
+                if cache_key in self.trust_cache:
+                    cached_result, cache_time = self.trust_cache[cache_key]
+                    if current_time - cache_time < timedelta(hours=1):  # 1 hour cache
+                        return cached_result
+            else:
+                self.trust_cache = {}
+
             trusted_count = 0
-            for trusted_handle in self.trusted_handles[:50]:  # Limit to avoid rate limits
+            checked_count = 0
+            max_checks = 30  # Reduced for speed
+
+            for trusted_handle in self.trusted_handles[:max_checks]:
                 try:
                     # Check if trusted account follows target
                     friendship = self.api.get_friendship(
@@ -97,17 +111,48 @@ class TrustedAccounts:
                     )[0]
                     if friendship.following:
                         trusted_count += 1
+
+                    checked_count += 1
+
+                    # Early exit if we have enough evidence
                     if trusted_count >= 3:
-                        logger.info(f"{target_handle} is followed by {trusted_count} trusted accounts")
-                        return True, trusted_count, f"Followed by {trusted_count} trusted accounts ✅"
+                        break
+
+                    # Also break early if we've checked enough without finding trust
+                    if checked_count >= 15 and trusted_count == 0:
+                        break
+
                 except tweepy.errors.TweepyException as e:
                     logger.warning(f"Error checking friendship for {trusted_handle}: {e}")
                     continue
 
-            message = f"Followed by {trusted_count} trusted account(s) {'✅' if trusted_count >= 2 else '⚠️'}"
-            is_trusted = trusted_count >= 2
+            # Generate message
+            if trusted_count >= 3:
+                message = f"Highly trusted ({trusted_count}+ follows) ✅"
+                is_trusted = True
+            elif trusted_count >= 2:
+                message = f"Trusted ({trusted_count} follows) ✅"
+                is_trusted = True
+            elif trusted_count == 1:
+                message = f"Some trust (1 follow) ⚠️"
+                is_trusted = False
+            else:
+                message = "No trusted follows ⚠️"
+                is_trusted = False
+
+            result = (is_trusted, trusted_count, message)
+
+            # Cache the result
+            self.trust_cache[target_handle] = (result, datetime.now())
+
+            # Clean old cache entries
+            if len(self.trust_cache) > 100:
+                oldest_key = min(self.trust_cache.keys(), 
+                               key=lambda k: self.trust_cache[k][1])
+                del self.trust_cache[oldest_key]
+
             logger.info(f"{target_handle} trusted check: {message}")
-            return is_trusted, trusted_count, message
+            return result
 
         except Exception as e:
             logger.error(f"Unexpected error in is_trusted for {target_handle}: {e}")

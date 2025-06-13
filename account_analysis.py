@@ -24,7 +24,8 @@ class AccountAnalyzer:
         """
         self.api = api
         self.sid = SentimentIntensityAnalyzer()
-        self.suspicious_keywords = ['crypto', 'nft', 'giveaway', 'investment', 'earn money']
+        self.suspicious_keywords = ['crypto', 'nft', 'giveaway', 'investment', 'earn money', 'pump', 'moon', 'diamond hands', 'hodl']
+        self.analysis_cache = {}  # Simple cache for recent analyses
 
     def get_account_age(self, created_at):
         """
@@ -147,12 +148,23 @@ class AccountAnalyzer:
         :return: Dict with all analysis results
         """
         try:
-            # Fetch recent tweets
+            # Check cache first (5 minute cache)
+            cache_key = f"{user.screen_name}_{user.id}"
+            current_time = datetime.utcnow()
+
+            if cache_key in self.analysis_cache:
+                cached_result, cache_time = self.analysis_cache[cache_key]
+                if (current_time - cache_time).seconds < 300:  # 5 minutes
+                    logger.info(f"Using cached analysis for {user.screen_name}")
+                    return cached_result
+
+            # Fetch recent tweets (reduced count for speed)
             tweets = self.api.user_timeline(
                 screen_name=user.screen_name,
-                count=20,
+                count=10,  # Reduced from 20 for faster processing
                 tweet_mode='extended',
-                exclude_replies=False
+                exclude_replies=True,  # Exclude replies for cleaner analysis
+                include_rts=False  # Exclude retweets
             )
 
             # Account age
@@ -185,7 +197,7 @@ class AccountAnalyzer:
                 tweet_analysis['message']
             ]
 
-            return {
+            result = {
                 'verified': user.verified,
                 'age': age,
                 'follower_ratio': follower_ratio,
@@ -198,6 +210,17 @@ class AccountAnalyzer:
                 'tweets': tweet_analysis,
                 'summary': '\n'.join(summary)
             }
+
+            # Cache the result
+            self.analysis_cache[cache_key] = (result, current_time)
+
+            # Clean old cache entries (keep only 50 most recent)
+            if len(self.analysis_cache) > 50:
+                oldest_key = min(self.analysis_cache.keys(), 
+                               key=lambda k: self.analysis_cache[k][1])
+                del self.analysis_cache[oldest_key]
+
+            return result
 
         except tweepy.errors.TweepyException as e:
             logger.error(f"Tweepy error in analyze for {user.screen_name}: {e}")

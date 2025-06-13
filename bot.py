@@ -8,6 +8,8 @@ from account_analysis import AccountAnalyzer
 import time
 import re
 import webbrowser
+import random
+import threading
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 # Configure logging with rotation
@@ -57,11 +59,26 @@ except tweepy.TweepyException as e:
 analyzer = AccountAnalyzer(api)
 trusted_checker = TrustedAccounts(api)
 
+# Response templates for more natural replies
+RESPONSE_TEMPLATES = [
+    "Here's what I found about @{username}:\n{analysis}",
+    "Quick analysis of @{username}:\n{analysis}",
+    "@{requester} Here's the scoop on @{username}:\n{analysis}",
+    "Account breakdown for @{username}:\n{analysis}",
+    "Let me break down @{username} for you:\n{analysis}",
+    "Analysis complete for @{username}:\n{analysis}"
+]
+
+POSITIVE_INTROS = ["Looking good!", "Pretty solid account!", "Seems legit!", "Nice profile!"]
+NEGATIVE_INTROS = ["Hmm, some red flags here...", "Proceed with caution!", "Worth being careful with this one.", "Some concerns here..."]
+NEUTRAL_INTROS = ["Mixed signals here.", "Hard to say definitively.", "Pretty average account.", "Standard profile."]
+
 # OAuth 2.0 authentication
 class OAuthCallbackHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         logger.info(f"Received request for path: {self.path}")
-        if self.path.startswith('/auth/twitter/callback'):
+        # Handle both callback path and root path redirects
+        if self.path.startswith('/auth/twitter/callback') or self.path == '/' or '?code=' in self.path:
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
@@ -154,46 +171,161 @@ class TwitterBot(tweepy.StreamingClient):
             contains_trigger = 'riddle me this' in text
 
             if is_reply and (contains_trigger or mentions_bot):
-                logger.info(f"Processing trigger from @{tweet.author_id}: {tweet.text}")
+                # Process in separate thread for faster response
+                thread = threading.Thread(target=self.process_analysis_request, args=(tweet,))
+                thread.daemon = True
+                thread.start()
 
-                # Get original tweet and author using v1.1 API
-                original_tweet_id = tweet.referenced_tweets[0].id
-                original_tweet = self.api.get_status(original_tweet_id, tweet_mode='extended')
-                original_author = original_tweet.user
+        except Exception as e:
+            logger.error(f"Unexpected error in on_tweet for {tweet.id}: {e}")
 
-                # Perform account analysis
-                analysis = analyzer.analyze(original_author)
+    def process_analysis_request(self, tweet):
+        """
+        Process analysis request in separate thread for better performance.
+        """
+        try:
+            logger.info(f"Processing trigger from @{tweet.author_id}: {tweet.text}")
 
-                # Perform trusted accounts check
-                is_trusted, trusted_count, trusted_message = trusted_checker.is_trusted(original_author.screen_name)
+            # Get original tweet and author using v1.1 API
+            original_tweet_id = tweet.referenced_tweets[0].id
+            original_tweet = self.api.get_status(original_tweet_id, tweet_mode='extended')
+            original_author = original_tweet.user
+            requester = self.api.get_user(user_id=tweet.author_id)
 
-                # Compile reply
-                summary = analysis.get('summary', 'Analysis unavailable ⚠️')
-                if is_trusted:
-                    summary += f"\n{trusted_message}"
-                else:
-                    summary += f"\n{trusted_message}"
+            # Perform analysis and trust check in parallel
+            analysis_thread = threading.Thread(target=self.get_analysis, args=(original_author,))
+            trust_thread = threading.Thread(target=self.get_trust_check, args=(original_author.screen_name,))
+            
+            self.analysis_result = None
+            self.trust_result = None
+            
+            analysis_thread.start()
+            trust_thread.start()
+            
+            analysis_thread.join(timeout=10)  # 10 second timeout
+            trust_thread.join(timeout=8)   # 8 second timeout
+            
+            # Generate natural response
+            reply_text = self.generate_natural_response(
+                requester.screen_name, 
+                original_author.screen_name, 
+                self.analysis_result, 
+                self.trust_result
+            )
 
-                # Ensure reply is within 280 characters
-                reply_prefix = f"@{self.api.get_user(user_id=tweet.author_id).screen_name} Trustworthiness of @{original_author.screen_name}:\n"
-                max_summary_length = 280 - len(reply_prefix) - 3
-                if len(summary) > max_summary_length:
-                    summary = summary[:max_summary_length - 3] + "..."
-
-                reply_text = reply_prefix + summary
-
-                # Post reply using v1.1 API
-                self.api.update_status(
-                    status=reply_text,
-                    in_reply_to_status_id=tweet.id,
-                    auto_populate_reply_metadata=True
-                )
-                logger.info(f"Replied to @{tweet.author_id} about @{original_author.screen_name}")
+            # Post reply using v1.1 API
+            self.api.update_status(
+                status=reply_text,
+                in_reply_to_status_id=tweet.id,
+                auto_populate_reply_metadata=True
+            )
+            logger.info(f"Replied to @{requester.screen_name} about @{original_author.screen_name}")
 
         except tweepy.TweepyException as e:
             logger.error(f"Tweepy error processing tweet {tweet.id}: {e}")
         except Exception as e:
-            logger.error(f"Unexpected error processing tweet {tweet.id}: {e}")
+            logger.error(f"Unexpected error processing analysis request: {e}")
+
+    def get_analysis(self, user):
+        """Get account analysis in thread."""
+        try:
+            self.analysis_result = analyzer.analyze(user)
+        except Exception as e:
+            logger.error(f"Analysis failed: {e}")
+            self.analysis_result = {'summary': 'Analysis failed ⚠️'}
+
+    def get_trust_check(self, username):
+        """Get trust check in thread."""
+        try:
+            self.trust_result = trusted_checker.is_trusted(username)
+        except Exception as e:
+            logger.error(f"Trust check failed: {e}")
+            self.trust_result = (False, 0, "Trust check failed ⚠️")
+
+    def generate_natural_response(self, requester, target_user, analysis, trust_info):
+        """
+        Generate a more natural, less robotic response.
+        """
+        try:
+            # Determine overall sentiment
+            if analysis and trust_info:
+                summary = analysis.get('summary', '')
+                is_trusted, trust_count, trust_msg = trust_info
+                
+                # Count positive vs negative indicators
+                positive_count = summary.count('✅')
+                negative_count = summary.count('⚠️')
+                
+                # Choose intro based on overall assessment
+                if positive_count > negative_count and trust_count >= 2:
+                    intro = random.choice(POSITIVE_INTROS)
+                elif negative_count > positive_count or trust_count == 0:
+                    intro = random.choice(NEGATIVE_INTROS)
+                else:
+                    intro = random.choice(NEUTRAL_INTROS)
+                
+                # Compact the analysis
+                compact_summary = self.compact_analysis(summary, trust_msg)
+                
+                # Choose random template
+                template = random.choice(RESPONSE_TEMPLATES)
+                
+                # Build response
+                response = f"@{requester} {intro}\n{compact_summary}"
+                
+                # Ensure it fits in 280 characters
+                if len(response) > 280:
+                    response = f"@{requester} Analysis of @{target_user}:\n{compact_summary}"
+                    if len(response) > 280:
+                        response = response[:277] + "..."
+                
+                return response
+            else:
+                return f"@{requester} Sorry, couldn't analyze @{target_user} right now. Try again later!"
+                
+        except Exception as e:
+            logger.error(f"Error generating response: {e}")
+            return f"@{requester} Analysis failed for @{target_user} ⚠️"
+
+    def compact_analysis(self, summary, trust_msg):
+        """
+        Create a more compact version of the analysis.
+        """
+        try:
+            lines = summary.split('\n')
+            compact_lines = []
+            
+            for line in lines:
+                if 'Verified' in line:
+                    compact_lines.append(line.replace('Verified', 'Verified').replace('Not verified', 'Unverified'))
+                elif 'Age:' in line:
+                    # Simplify age reporting
+                    if '✅' in line:
+                        compact_lines.append('Established account ✅')
+                    else:
+                        compact_lines.append('New account ⚠️')
+                elif 'Follower ratio:' in line:
+                    if '✅' in line:
+                        compact_lines.append('Good follower ratio ✅')
+                    else:
+                        compact_lines.append('Suspicious follower ratio ⚠️')
+                elif 'Bio length:' in line and 'Suspicious keywords' not in line:
+                    continue  # Skip simple bio length
+                elif 'Suspicious keywords' in line:
+                    compact_lines.append('Suspicious bio content ⚠️')
+                elif 'Avg likes:' in line:
+                    compact_lines.append('Engagement: ' + line.split('Avg likes: ')[1])
+                elif 'Sentiment:' in line:
+                    sentiment_part = line.split('Sentiment: ')[1].split(' ')[0]
+                    compact_lines.append(f'{sentiment_part} sentiment')
+            
+            # Add trust info
+            compact_lines.append(trust_msg)
+            
+            return '\n'.join(compact_lines)
+        except Exception as e:
+            logger.error(f"Error compacting analysis: {e}")
+            return summary
 
     def on_error(self, status):
         """

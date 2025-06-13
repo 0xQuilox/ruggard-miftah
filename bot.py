@@ -11,6 +11,7 @@ import webbrowser
 import random
 import threading
 from http.server import HTTPServer, BaseHTTPRequestHandler
+from web_ui import ui_instance
 
 # Configure logging with rotation
 from logging.handlers import RotatingFileHandler
@@ -263,6 +264,7 @@ class TwitterBot(tweepy.StreamingClient):
         """
         try:
             logger.info(f"Processing trigger from @{tweet.author_id}: {tweet.text}")
+            ui_instance.update_status(tweets_processed=ui_instance.bot_status['tweets_processed'] + 1)
 
             # Get original tweet and author using v1.1 API
             original_tweet_id = tweet.referenced_tweets[0].id
@@ -301,8 +303,16 @@ class TwitterBot(tweepy.StreamingClient):
 
         except tweepy.TweepyException as e:
             logger.error(f"Tweepy error processing tweet {tweet.id}: {e}")
+            ui_instance.update_status(
+                errors_count=ui_instance.bot_status['errors_count'] + 1,
+                last_error=str(e)
+            )
         except Exception as e:
             logger.error(f"Unexpected error processing analysis request: {e}")
+            ui_instance.update_status(
+                errors_count=ui_instance.bot_status['errors_count'] + 1,
+                last_error=str(e)
+            )
 
     def get_analysis(self, user):
         """Get account analysis in thread."""
@@ -420,18 +430,41 @@ def start_bot():
     Start the Twitter bot stream.
     """
     logger.info("Starting Twitter bot...")
+    ui_instance.update_status(
+        running=True, 
+        start_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        oauth_status='Starting...'
+    )
+    
     try:
+        ui_instance.update_status(oauth_status='Getting Access Token...')
         access_token = get_access_token()
+        ui_instance.update_status(oauth_status='Token Obtained', stream_status='Connecting...')
+        
         stream = TwitterBot(access_token, api)
         # Add stream rules for triggers
         stream.add_rules(tweepy.StreamRule(f'"riddle me this" OR @{BOT_HANDLE}'))
+        ui_instance.update_status(stream_status='Connected', oauth_status='Authenticated')
+        
         stream.filter(tweet_fields=['referenced_tweets'], expansions=['author_id'])
         logger.info("Stream started successfully")
     except Exception as e:
         logger.error(f"Failed to start stream: {e}")
+        ui_instance.update_status(
+            running=False, 
+            oauth_status='Failed',
+            stream_status='Disconnected',
+            last_error=str(e)
+        )
+        ui_instance.update_status(errors_count=ui_instance.bot_status['errors_count'] + 1)
         raise
 
 if __name__ == "__main__":
+    # Start web UI
+    ui_instance.start_server()
+    print(f"\n🌐 Web UI available at: http://0.0.0.0:8080")
+    print("📊 Monitor bot status in your browser\n")
+    
     while True:
         try:
             start_bot()
@@ -439,7 +472,14 @@ if __name__ == "__main__":
                 time.sleep(60)
         except KeyboardInterrupt:
             logger.info("Bot stopped by user")
+            ui_instance.update_status(running=False, stream_status='Stopped by User')
             break
         except Exception as e:
             logger.error(f"Bot crashed: {e}. Restarting in 60 seconds...")
+            ui_instance.update_status(
+                running=False,
+                stream_status='Crashed - Restarting',
+                errors_count=ui_instance.bot_status['errors_count'] + 1,
+                last_error=str(e)
+            )
             time.sleep(60)

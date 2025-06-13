@@ -648,3 +648,134 @@
 2025-06-13 00:57:09,924 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:09] "GET /api/status HTTP/1.1" 200 -
 2025-06-13 00:57:09,926 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:09] "GET /api/logs HTTP/1.1" 200 -
 2025-06-13 00:57:14,868 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:14] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:57:19,835 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:19] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:57:19,836 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:19] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:57:24,884 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:24] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:57:29,895 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:29] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:57:29,895 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:29] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:57:35,183 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:35] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:57:40,178 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:40] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:57:40,179 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:40] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:57:45,184 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:45] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:57:49,975 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:49] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:57:49,976 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:49] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:57:54,833 - INFO - 172.31.128.4 - - [13/Jun/2025 00:57:54] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:57:59,545 - INFO - Twitter API v1.1 initialized successfully
+2025-06-13 00:57:59,569 - INFO - Loaded trusted list from cache
+2025-06-13 00:57:59,569 - INFO - Web UI started on port 8080
+2025-06-13 00:57:59,571 - INFO - Starting Twitter bot...
+2025-06-13 00:57:59,571 - INFO - Using OAuth 1.0a authentication with existing tokens
+2025-06-13 00:57:59,579 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://172.31.128.4:8080
+2025-06-13 00:57:59,580 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-13 00:57:59,638 - ERROR - Failed to start stream: 401 Unauthorized
+Unauthorized
+2025-06-13 00:57:59,638 - ERROR - Bot crashed: 401 Unauthorized
+Unauthorized. Restarting in 60 seconds...
+2025-06-13 00:58:07,272 - INFO - 172.31.128.4 - - [13/Jun/2025 00:58:07] "GET / HTTP/1.1" 200 -
+2025-06-13 00:58:09,586 - INFO - 172.31.128.4 - - [13/Jun/2025 00:58:09] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:58:09,588 - INFO - 172.31.128.4 - - [13/Jun/2025 00:58:09] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:58:14,794 - INFO - 172.31.128.4 - - [13/Jun/2025 00:58:14] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:58:19,603 - INFO - 172.31.128.4 - - [13/Jun/2025 00:58:19] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:58:19,604 - INFO - 172.31.128.4 - - [13/Jun/2025 00:58:19] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:58:24,687 - INFO - 172.31.128.4 - - [13/Jun/2025 00:58:24] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:58:29,665 - INFO - 172.31.128.4 - - [13/Jun/2025 00:58:29] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:58:29,666 - INFO - 172.31.128.4 - - [13/Jun/2025 00:58:29] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:58:34,609 - INFO - 172.31.128.4 - - [13/Jun/2025 00:58:34] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:58:39,595 - INFO - 172.31.128.4 - - [13/Jun/2025 00:58:39] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 00:58:39,596 - INFO - 172.31.128.4 - - [13/Jun/2025 00:58:39] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 00:58:44,607 - INFO - 172.31.128.4 - - [13/Jun/2025 00:58:44] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:03:05,701 - INFO - Twitter API v1.1 initialized successfully
+2025-06-13 01:03:05,713 - INFO - Loaded trusted list from cache
+2025-06-13 01:03:05,713 - INFO - Web UI started on port 8080
+2025-06-13 01:03:05,715 - INFO - Starting Twitter bot...
+2025-06-13 01:03:05,715 - INFO - Using OAuth 1.0a authentication with existing tokens
+2025-06-13 01:03:05,724 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://172.31.128.4:8080
+2025-06-13 01:03:05,724 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-13 01:03:05,905 - ERROR - Failed to start stream: 403 Forbidden
+When authenticating requests to the Twitter API v2 endpoints, you must use keys and tokens from a Twitter developer App that is attached to a Project. You can create a project via the developer portal.
+2025-06-13 01:03:05,905 - ERROR - Bot crashed: 403 Forbidden
+When authenticating requests to the Twitter API v2 endpoints, you must use keys and tokens from a Twitter developer App that is attached to a Project. You can create a project via the developer portal.. Restarting in 60 seconds...
+2025-06-13 01:03:23,475 - INFO - 172.31.128.4 - - [13/Jun/2025 01:03:23] "GET / HTTP/1.1" 200 -
+2025-06-13 01:03:28,905 - INFO - 172.31.128.4 - - [13/Jun/2025 01:03:28] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:03:31,268 - INFO - 172.31.128.4 - - [13/Jun/2025 01:03:31] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:03:32,994 - INFO - 172.31.128.4 - - [13/Jun/2025 01:03:32] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:03:39,065 - INFO - 172.31.128.4 - - [13/Jun/2025 01:03:39] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:03:39,125 - INFO - 172.31.128.4 - - [13/Jun/2025 01:03:39] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:03:43,002 - INFO - 172.31.128.4 - - [13/Jun/2025 01:03:43] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:03:48,759 - INFO - 172.31.128.4 - - [13/Jun/2025 01:03:48] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:03:48,802 - INFO - 172.31.128.4 - - [13/Jun/2025 01:03:48] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:03:53,065 - INFO - 172.31.128.4 - - [13/Jun/2025 01:03:53] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:04:01,288 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:01] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:04:01,356 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:01] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:04:03,679 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:03] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:04:05,906 - INFO - Starting Twitter bot...
+2025-06-13 01:04:05,907 - INFO - Using OAuth 1.0a authentication with existing tokens
+2025-06-13 01:04:06,045 - ERROR - Failed to start stream: 403 Forbidden
+When authenticating requests to the Twitter API v2 endpoints, you must use keys and tokens from a Twitter developer App that is attached to a Project. You can create a project via the developer portal.
+2025-06-13 01:04:06,046 - ERROR - Bot crashed: 403 Forbidden
+When authenticating requests to the Twitter API v2 endpoints, you must use keys and tokens from a Twitter developer App that is attached to a Project. You can create a project via the developer portal.. Restarting in 60 seconds...
+2025-06-13 01:04:10,896 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:10] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:04:10,897 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:10] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:04:13,175 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:13] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:04:18,167 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:18] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:04:18,172 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:18] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:04:23,187 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:23] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:04:31,883 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:31] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:04:31,884 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:31] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:04:38,196 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:38] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:04:38,197 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:38] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:04:38,546 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:38] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:04:45,506 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:45] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:04:48,615 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:48] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:04:48,877 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:48] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:04:55,258 - INFO - 172.31.128.4 - - [13/Jun/2025 01:04:55] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:05:06,047 - INFO - Starting Twitter bot...
+2025-06-13 01:05:06,047 - INFO - Using OAuth 1.0a authentication with existing tokens
+2025-06-13 01:05:06,189 - ERROR - Failed to start stream: 403 Forbidden
+When authenticating requests to the Twitter API v2 endpoints, you must use keys and tokens from a Twitter developer App that is attached to a Project. You can create a project via the developer portal.
+2025-06-13 01:05:06,189 - ERROR - Bot crashed: 403 Forbidden
+When authenticating requests to the Twitter API v2 endpoints, you must use keys and tokens from a Twitter developer App that is attached to a Project. You can create a project via the developer portal.. Restarting in 60 seconds...
+2025-06-13 01:05:23,918 - INFO - 172.31.128.4 - - [13/Jun/2025 01:05:23] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:05:23,939 - INFO - 172.31.128.4 - - [13/Jun/2025 01:05:23] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:05:28,626 - INFO - 172.31.128.4 - - [13/Jun/2025 01:05:28] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:05:28,629 - INFO - 172.31.128.4 - - [13/Jun/2025 01:05:28] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:05:33,082 - INFO - 172.31.128.4 - - [13/Jun/2025 01:05:33] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:05:38,004 - INFO - 172.31.128.4 - - [13/Jun/2025 01:05:38] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:05:38,009 - INFO - 172.31.128.4 - - [13/Jun/2025 01:05:38] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:05:42,997 - INFO - 172.31.128.4 - - [13/Jun/2025 01:05:42] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:05:47,997 - INFO - 172.31.128.4 - - [13/Jun/2025 01:05:47] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:05:48,000 - INFO - 172.31.128.4 - - [13/Jun/2025 01:05:48] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:05:53,009 - INFO - 172.31.128.4 - - [13/Jun/2025 01:05:53] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:05:57,996 - INFO - 172.31.128.4 - - [13/Jun/2025 01:05:57] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:05:58,000 - INFO - 172.31.128.4 - - [13/Jun/2025 01:05:58] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:06:03,200 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:03] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:06:06,191 - INFO - Starting Twitter bot...
+2025-06-13 01:06:06,191 - INFO - Using OAuth 1.0a authentication with existing tokens
+2025-06-13 01:06:06,336 - ERROR - Failed to start stream: 403 Forbidden
+When authenticating requests to the Twitter API v2 endpoints, you must use keys and tokens from a Twitter developer App that is attached to a Project. You can create a project via the developer portal.
+2025-06-13 01:06:06,336 - ERROR - Bot crashed: 403 Forbidden
+When authenticating requests to the Twitter API v2 endpoints, you must use keys and tokens from a Twitter developer App that is attached to a Project. You can create a project via the developer portal.. Restarting in 60 seconds...
+2025-06-13 01:06:08,177 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:08] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:06:08,178 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:08] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:06:16,858 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:16] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:06:18,576 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:18] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:06:22,356 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:22] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:06:23,178 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:23] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:06:28,689 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:28] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:06:30,296 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:30] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:06:33,178 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:33] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:06:38,288 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:38] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:06:38,295 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:38] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:06:43,422 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:43] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:06:48,209 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:48] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:06:48,211 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:48] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:06:53,569 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:53] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:06:58,114 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:58] "GET /api/status HTTP/1.1" 200 -
+2025-06-13 01:06:58,119 - INFO - 172.31.128.4 - - [13/Jun/2025 01:06:58] "GET /api/logs HTTP/1.1" 200 -
+2025-06-13 01:07:03,020 - INFO - 172.31.128.4 - - [13/Jun/2025 01:07:03] "GET /api/status HTTP/1.1" 200 -

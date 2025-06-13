@@ -1,4 +1,5 @@
-modules = ["python-3.12", "bash"]
+modules = ["python-3.12", "web", "bash"]
+run = "python undefined"
 
 [nix]
 channel = "stable-24_05"
@@ -30,3 +31,6 @@ externalPort = 5000
 [[ports]]
 localPort = 8080
 externalPort = 8080
+
+[deployment]
+run = ["sh", "-c", "python undefined"]

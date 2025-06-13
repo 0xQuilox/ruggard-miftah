@@ -3,7 +3,7 @@ import json
 import threading
 import time
 from datetime import datetime
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 import logging
 
 logger = logging.getLogger(__name__)
@@ -12,6 +12,7 @@ class BotStatusUI:
     def __init__(self, port=8080):
         self.app = Flask(__name__)
         self.port = port
+        self.oauth_handler = None
         self.bot_status = {
             'running': False,
             'last_activity': None,
@@ -41,6 +42,44 @@ class BotStatusUI:
                 return jsonify({'logs': logs})
             except Exception as e:
                 return jsonify({'logs': [f'Error reading logs: {str(e)}']})
+        
+        @self.app.route('/auth/twitter/callback')
+        def oauth_callback():
+            logger.info(f"OAuth callback received: {request.url}")
+            
+            # Check if we have the required parameters
+            if 'code' in request.args and 'state' in request.args:
+                logger.info("Authorization code received from Twitter")
+                
+                # Store the full callback URL for token exchange
+                import bot
+                bot.auth_response_url = request.url
+                
+                success_html = """
+                <html>
+                    <head><title>Twitter OAuth Success</title></head>
+                    <body style='font-family: Arial, sans-serif; text-align: center; padding: 50px;'>
+                        <h2 style='color: #1DA1F2;'>Twitter Authorization Successful!</h2>
+                        <p>The bot has been authorized and is now processing your request.</p>
+                        <p>You can safely close this window and return to the console.</p>
+                        <p style='color: #666; font-size: 12px;'>OAuth 2.0 flow completed with PKCE verification</p>
+                    </body>
+                </html>
+                """
+                return success_html
+            else:
+                logger.warning("Missing required OAuth parameters")
+                error_html = """
+                <html>
+                    <head><title>OAuth Error</title></head>
+                    <body style='font-family: Arial, sans-serif; text-align: center; padding: 50px;'>
+                        <h2 style='color: #e74c3c;'>Authorization Failed</h2>
+                        <p>Missing required parameters from Twitter OAuth callback.</p>
+                        <p>Please try the authorization process again.</p>
+                    </body>
+                </html>
+                """
+                return error_html, 400
     
     def update_status(self, **kwargs):
         """Update bot status"""

@@ -222,3 +222,9 @@
 2025-06-13 00:05:43,060 - INFO - OAuth callback received successfully
 2025-06-13 00:05:43,060 - ERROR - Failed to start stream: (insecure_transport) OAuth 2 MUST utilize https.
 2025-06-13 00:05:43,060 - ERROR - Bot crashed: (insecure_transport) OAuth 2 MUST utilize https.. Restarting in 60 seconds...
+2025-06-13 00:07:08,880 - INFO - Twitter API v1.1 initialized successfully
+2025-06-13 00:07:08,889 - INFO - Loaded trusted list from cache
+2025-06-13 00:07:08,889 - INFO - Starting Twitter bot...
+2025-06-13 00:07:08,889 - INFO - Authorization URL generated: https://twitter.com/i/oauth2/authorize?response_type=code&client_id=MDJFRFlJdjFDbWNGcFFpRHg1WFU6MTpjaQ&redirect_uri=https%3A%2F%2Fruggard.replit.app%2Fauth%2Ftwitter%2Fcallback&scope=tweet.read+tweet.write+users.read+offline.access&state=SKoxs98YhGEVTVkb9MIYwSDTaGdjgd&code_challenge=RZvv4ybYe6UOmm2o1PuhsZlu5hkaZkMayYPCVrNIJOA&code_challenge_method=S256
+2025-06-13 00:07:08,889 - INFO - Callback URL: https://ruggard.replit.app/auth/twitter/callback
+2025-06-13 00:07:08,890 - INFO - Waiting for OAuth callback on port 5000...

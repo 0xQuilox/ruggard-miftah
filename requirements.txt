@@ -5,3 +5,9 @@ vaderSentiment==3.3.2
 textblob==0.18.0.post0
 
 Flask==2.3.3
+flask
+python-dotenv
+requests
+textblob
+tweepy
+vaderSentiment

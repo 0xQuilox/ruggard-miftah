@@ -82,45 +82,47 @@ class OAuthCallbackHandler(BaseHTTPRequestHandler):
         if self.path.startswith('/auth/twitter/callback') or '?code=' in self.path:
             # Validate that we received an authorization code
             if 'code=' in self.path:
-                logger.info("✅ Authorization code received from Twitter")
+                logger.info("Authorization code received from Twitter")
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
-                self.wfile.write(b
+                success_html = """
                 <html>
                     <head><title>Twitter OAuth Success</title></head>
                     <body style='font-family: Arial, sans-serif; text-align: center; padding: 50px;'>
-                        <h2 style='color: #1DA1F2;'>✅ Twitter Authorization Successful!</h2>
+                        <h2 style='color: #1DA1F2;'>Twitter Authorization Successful!</h2>
                         <p>The bot has been authorized and is now processing your request.</p>
                         <p>You can safely close this window and return to the console.</p>
                         <p style='color: #666; font-size: 12px;'>OAuth 2.0 flow completed with PKCE verification</p>
                     </body>
                 </html>
-                """)
+                """
+                self.wfile.write(success_html.encode('utf-8'))
                 global auth_response_url
                 auth_response_url = self.path
                 logger.info("OAuth 2.0 callback processed successfully")
             else:
-                logger.warning("❌ No authorization code in callback")
+                logger.warning("No authorization code in callback")
                 self.send_response(400)
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
-                self.wfile.write(b"""
+                error_html = """
                 <html>
                     <head><title>OAuth Error</title></head>
                     <body style='font-family: Arial, sans-serif; text-align: center; padding: 50px;'>
-                        <h2 style='color: #e74c3c;'>❌ Authorization Failed</h2>
+                        <h2 style='color: #e74c3c;'>Authorization Failed</h2>
                         <p>No authorization code received from Twitter.</p>
                         <p>Please try the authorization process again.</p>
                     </body>
                 </html>
-                """)
+                """
+                self.wfile.write(error_html.encode('utf-8'))
         else:
             logger.warning(f"Unexpected request path: {self.path}")
             self.send_response(404)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
-            self.wfile.write(b"""
+            not_found_html = """
             <html>
                 <head><title>Not Found</title></head>
                 <body style='font-family: Arial, sans-serif; text-align: center; padding: 50px;'>
@@ -128,7 +130,8 @@ class OAuthCallbackHandler(BaseHTTPRequestHandler):
                     <p>Expected OAuth callback at /auth/twitter/callback</p>
                 </body>
             </html>
-            """)
+            """
+            self.wfile.write(not_found_html.encode('utf-8'))
     
     def log_message(self, format, *args):
         # Suppress default HTTP server logging to avoid clutter
@@ -196,13 +199,27 @@ def get_access_token():
 
     # Step 3: Exchange authorization code for access token
     if auth_response_url:
-        logger.info("Received OAuth callback, exchanging authorization code for access token...")
-        # This handles the complete token exchange with PKCE verification
-        access_token = oauth2_user_handler.fetch_token(auth_response_url)
-        logger.info("✅ OAuth 2.0 access token obtained successfully")
-        return access_token['access_token']
+        try:
+            logger.info("Received OAuth callback, exchanging authorization code for access token...")
+            # Parse the callback URL to extract code and state parameters
+            from urllib.parse import urlparse, parse_qs
+            parsed_url = urlparse(auth_response_url)
+            params = parse_qs(parsed_url.query)
+            
+            if 'code' in params and 'state' in params:
+                logger.info(f"OAuth parameters received - Code: {params['code'][0][:10]}..., State: {params['state'][0][:10]}...")
+                # This handles the complete token exchange with PKCE verification
+                access_token = oauth2_user_handler.fetch_token(auth_response_url)
+                logger.info("OAuth 2.0 access token obtained successfully")
+                return access_token['access_token']
+            else:
+                logger.error("Missing required OAuth parameters (code or state)")
+                raise Exception("Invalid OAuth callback - missing parameters")
+        except Exception as e:
+            logger.error(f"Error during token exchange: {e}")
+            raise Exception(f"OAuth 2.0 token exchange failed: {e}")
     else:
-        logger.error("❌ Failed to receive OAuth callback")
+        logger.error("Failed to receive OAuth callback")
         raise Exception("OAuth 2.0 authentication failed")
 
 class TwitterBot(tweepy.StreamingClient):

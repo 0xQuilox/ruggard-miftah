@@ -228,3 +228,14 @@
 2025-06-13 00:07:08,889 - INFO - Authorization URL generated: https://twitter.com/i/oauth2/authorize?response_type=code&client_id=MDJFRFlJdjFDbWNGcFFpRHg1WFU6MTpjaQ&redirect_uri=https%3A%2F%2Fruggard.replit.app%2Fauth%2Ftwitter%2Fcallback&scope=tweet.read+tweet.write+users.read+offline.access&state=SKoxs98YhGEVTVkb9MIYwSDTaGdjgd&code_challenge=RZvv4ybYe6UOmm2o1PuhsZlu5hkaZkMayYPCVrNIJOA&code_challenge_method=S256
 2025-06-13 00:07:08,889 - INFO - Callback URL: https://ruggard.replit.app/auth/twitter/callback
 2025-06-13 00:07:08,890 - INFO - Waiting for OAuth callback on port 5000...
+2025-06-13 00:19:52,525 - INFO - Twitter API v1.1 initialized successfully
+2025-06-13 00:19:52,533 - INFO - Loaded trusted list from cache
+2025-06-13 00:19:52,534 - INFO - Starting Twitter bot...
+2025-06-13 00:19:52,534 - INFO - OAuth 2.0 authorization URL generated with PKCE: https://twitter.com/i/oauth2/authorize?response_type=code&client_id=MDJFRFlJdjFDbWNGcFFpRHg1WFU6MTpjaQ&redirect_uri=https%3A%2F%2Fruggard.replit.app%2Fauth%2Ftwitter%2Fcallback&scope=tweet.read+tweet.write+users.read+offline.access&state=fmDekyvgUWQWcsPCU9oa8RJBJtsGSm&code_challenge=wz_p-jzstVUclAeydbGD33ty3sen46Y2vzk7HXZJ-FE&code_challenge_method=S256
+2025-06-13 00:19:52,534 - INFO - Callback URL: https://ruggard.replit.app/auth/twitter/callback
+2025-06-13 00:19:52,535 - INFO - Waiting for OAuth 2.0 callback on port 5000...
+2025-06-13 00:20:05,867 - INFO - OAuth callback received for path: /
+2025-06-13 00:20:05,867 - WARNING - Unexpected request path: /
+2025-06-13 00:20:05,868 - ERROR - Failed to receive OAuth callback
+2025-06-13 00:20:05,868 - ERROR - Failed to start stream: OAuth 2.0 authentication failed
+2025-06-13 00:20:05,868 - ERROR - Bot crashed: OAuth 2.0 authentication failed. Restarting in 60 seconds...

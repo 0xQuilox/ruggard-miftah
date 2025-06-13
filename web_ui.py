@@ -64,20 +64,25 @@ class BotStatusUI:
                 
                 # Exchange code for access token
                 from bot import oauth_tokens, CLIENT_ID, CLIENT_SECRET
+                import tweepy
                 
+                # Create OAuth2 handler with the same configuration as in bot.py
                 oauth2_user_handler = tweepy.OAuth2UserHandler(
                     client_id=CLIENT_ID,
-                    redirect_uri=f"{request.url_root}auth/twitter/callback",
+                    redirect_uri=f"{request.url_root.replace('http://', 'https://')}auth/twitter/callback",
                     scope=["tweet.read", "tweet.write", "users.read", "follows.read"],
                     client_secret=CLIENT_SECRET
                 )
                 
+                # Fetch the token using the full callback URL
+                full_callback_url = request.url.replace('http://', 'https://')
                 access_token = oauth2_user_handler.fetch_token(
-                    f"{request.url_root}auth/twitter/callback?code={code}&state={state}"
+                    authorization_response=full_callback_url
                 )
                 
                 oauth_tokens['access_token'] = access_token
                 logger.info("OAuth 2.0 authentication successful!")
+                logger.info(f"Access token obtained: {access_token.get('access_token', 'N/A')[:10]}...")
                 
                 return """
                 <html>
@@ -86,6 +91,11 @@ class BotStatusUI:
                         <h2 style='color: #1DA1F2;'>✅ Authentication Successful!</h2>
                         <p>The bot has been successfully authenticated with Twitter.</p>
                         <p>You can now close this window and return to your bot.</p>
+                        <script>
+                            setTimeout(function() {
+                                window.close();
+                            }, 3000);
+                        </script>
                     </body>
                 </html>
                 """
